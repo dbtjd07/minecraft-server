@@ -105,19 +105,19 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* 대문짝만 한 서버 주소 & 초특대 온라인/오프라인 상태 카드 배너 */
+        /* 대문짝만 한 서버 주소 & 중앙 정렬 카드 배너 */
         .server-hero-card {
             background: linear-gradient(135deg, rgba(15, 17, 21, 0.9) 0%, rgba(21, 23, 30, 0.95) 100%), #15171e;
             border: 3px solid #da373c;
             border-radius: 20px;
-            padding: 28px 32px;
+            padding: 30px;
             margin-bottom: 25px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            text-align: center;
+            gap: 16px;
             transition: all 0.3s ease;
         }
         .server-hero-card.online {
@@ -129,14 +129,10 @@
             box-shadow: 0 0 25px rgba(218, 55, 60, 0.35);
         }
 
-        .server-info-left {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
         .server-status-row {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
         }
         .status-indicator {
@@ -162,6 +158,15 @@
             font-size: 1.6rem;
             text-shadow: 0 0 12px rgba(35, 165, 90, 0.4);
         }
+
+        /* 주소와 복사 버튼을 한 줄로 나란히 배치 */
+        .server-ip-copy-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
         .server-ip-huge {
             font-family: monospace;
             font-size: 2.2rem;
@@ -169,41 +174,16 @@
             color: #ffcb05;
             letter-spacing: 1px;
             text-shadow: 0 0 12px rgba(255, 203, 5, 0.4);
-            margin: 2px 0;
-        }
-        .server-action-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .power-btn-lg {
-            background: #252833;
-            border: 2px solid #3b4050;
-            color: #fff;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-        }
-        .power-btn-lg:hover {
-            background: #e3350d;
-            border-color: #e3350d;
-            transform: scale(1.08);
+            margin: 0;
         }
         .ip-copy-btn-lg {
             background: #ffcb05;
             color: #0d0e12;
             border: none;
-            padding: 15px 24px;
+            padding: 12px 20px;
             border-radius: 12px;
             font-weight: 900;
-            font-size: 1.05rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 4px 12px rgba(255, 203, 5, 0.3);
@@ -212,6 +192,30 @@
             gap: 8px;
         }
         .ip-copy-btn-lg:hover { background: #ffd733; transform: scale(1.05); }
+
+        /* 전원 버튼 아래쪽 배치 스타일 */
+        .power-btn-lg {
+            background: #252833;
+            border: 2px solid #3b4050;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            margin-top: 4px;
+        }
+        .power-btn-lg:hover {
+            background: #e3350d;
+            border-color: #e3350d;
+            transform: scale(1.05);
+        }
 
         /* Banner */
         .hero-banner {
@@ -568,19 +572,21 @@
         <!-- 0. 메인 홈 탭 -->
         <div id="tab-home" class="tab-content active">
             
-            <!-- 대문짝만 한 서버 주소 & 초특대 온라인/오프라인 상태 카드 배너 -->
+            <!-- 중앙 정렬된 서버 주소 및 상태/전원 카드 배너 -->
             <div id="serverHeroCard" class="server-hero-card offline">
-                <div class="server-info-left">
-                    <div class="server-status-row">
-                        <div id="statusIndicator" class="status-indicator"></div>
-                        <span id="statusText" class="status-text">확인 중...</span>
-                    </div>
+                <div class="server-status-row">
+                    <div id="statusIndicator" class="status-indicator"></div>
+                    <span id="statusText" class="status-text">확인 중...</span>
+                </div>
+                
+                <div class="server-ip-copy-row">
                     <div class="server-ip-huge">25.18.80.235:1234</div>
-                </div>
-                <div class="server-action-right">
                     <button class="ip-copy-btn-lg" onclick="copyText('25.18.80.235:1234')"><i class="fa-regular fa-copy"></i> 주소 복사</button>
-                    <button class="power-btn-lg" onclick="toggleServerStatus()" title="서버 전원 켜기/끄기"><i class="fa-solid fa-power-off"></i></button>
                 </div>
+
+                <button class="power-btn-lg" onclick="toggleServerStatus()" title="서버 전원 켜기/끄기">
+                    <i class="fa-solid fa-power-off"></i> <span id="powerBtnText">서버 전원 켜기/끄기</span>
+                </button>
             </div>
 
             <div class="hero-banner">
@@ -743,7 +749,6 @@
         let selectedTheme = "red";
         let serverState = 0; // 0: 꺼짐, 1: 켜짐
 
-        // 대폭 확장된 포켓몬 번호 맵 (1세대 ~ 주요 전설 및 신규 포켓몬 포함)
         const pokeNumMap = {
             "이상해씨":1, "이상해풀":2, "이상해꽃":3,
             "파이리":4, "리자드":5, "리자몽":6,
@@ -786,7 +791,7 @@
             "롱스톤":95,
             "슬리프":96, "슬리퍼":97,
             "크랩":98, "킹크랩":99,
-            "찌리리공":100, "볼비트":101, "마이농":311, "번개맨":101, "찌리리공":100, "붐볼":101,
+            "찌리리공":100, "붐볼":101,
             "아라리":102, "나시":103,
             "탕구리":104, "텅구리":105,
             "시라소몬":106, "홍수몬":107,
@@ -830,7 +835,7 @@
             "불꽃숭이":390, "초염몽":392,
             "팽도리":393, "엠페르트":395,
             "디아루가":483, "펄기아":484, "기라티나":487, "아르세우스":493,
-            "주리비얀":495, "뚜꾸리":498, "수인의":501, "수댕이":501,
+            "주리비얀":495, "뚜꾸리":498, "수댕이":501,
             "도치마론":650, "개구마르":656, "개굴닌자":658,
             "나몰빼미":722, "냐오불":725, "누리공":728,
             "흥나숭":810, "염버니":813, "울머기":816,
@@ -913,7 +918,7 @@
             updateStatusUI();
         };
 
-        // 화면 UI 반영 함수 (온라인/오프라인 테두리 및 대형 텍스트 적용)
+        // 화면 UI 반영 함수 (온라인/오프라인 테두리 및 중앙 정렬 적용)
         function updateStatusUI() {
             const card = document.getElementById("serverHeroCard");
             const indicator = document.getElementById("statusIndicator");
