@@ -445,7 +445,7 @@
             background: #111319;
         }
 
-        /* 커뮤니티 / 채팅 스타일 */
+        /* 커뮤니티 / 채팅 스타일 (스크롤바 숨기기 적용) */
         .chat-container {
             background: #171920;
             border: 1px solid #282c37;
@@ -465,7 +465,14 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            /* 스크롤바 숨기기 (파이어폭스) */
+            scrollbar-width: none;
         }
+        /* 스크롤바 숨기기 (크롬, 사파리, 엣지) */
+        .chat-box::-webkit-scrollbar {
+            display: none;
+        }
+
         .chat-msg {
             background: #171920;
             border: 1px solid #282c37;
@@ -968,7 +975,7 @@
             "페라페", "화강돌", "딥상어동", "한바이트", "한카리아스", "먹고자", "리오르", "루카리오", "히포포타스", "하마돈",
             "스콜피", "드래피온", "삐딱구리", "독개굴", "무스틈니", "형광어", "네오라이트", "타만타", "눈쓰개", "눈설왕",
             "포푸니라", "자포코일", "내룸벨트", "거대코뿌리", "덩쿠림보", "에레키블", "마그마번", "토게키스", "메가자리", "리피아",
-            "글레이시아", "글라이온", "맘모꾸리", "폴리곤Z", "엘레이드", "대코파스", "야느와르몽", "눈여아", "로토무", "유크시",
+            "글레이시아", "글라이온", "맘모꾸리", "폴리곤Z", "엘레이드", "대코파с", "야느와르몽", "눈여아", "로토무", "유크시",
             "엠라이트", "아그놈", "디아루가", "펄기아", "히드런", "레지기가스", "기라티나", "크레세리아", "피오네", "마나피",
             "다크라이", "쉐이미", "아르세우스", "비크티니", "주리비얀", "샤비", "샤로다", "뚜꾸리", "차오꿀", "염무왕",
             "수댕이", "쌍검자비", "대검귀", "보르쥐", "보르그", "요테리", "하데리어", "바랜드", "쌔비냥", "레파르다스",
@@ -1080,7 +1087,7 @@
             { name: "세렙 스폰지", coords: "9744 65 8968", img: "" }
         ];
 
-        // ⚡ [실시간 프로필 감지 함수 - 단일 리스너]
+        // ⚡ [실시간 프로필 감지 함수 - 단일 리스너 및 즉시 반영]
         function listenProfiles() {
             const homeContainer = document.getElementById("home-profile-container");
             const profileContainer = document.getElementById("profile-container");
@@ -1250,10 +1257,13 @@
         };
 
         function listenCommunity() {
-            const q = query(collection(db, "chats"), orderBy("timestamp", "asc"));
+            // timestamp 기준 내림차순(desc) 정렬하여 최신 메시지가 위에 오도록 설정
+            const q = query(collection(db, "chats"), orderBy("timestamp", "desc"));
+            
             onSnapshot(q, (snapshot) => {
                 const chatBox = document.getElementById("chatBox");
                 chatBox.innerHTML = "";
+                
                 snapshot.forEach((doc) => {
                     const data = doc.data();
                     const timeStr = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
@@ -1265,25 +1275,26 @@
                         </div>
                     `;
                 });
-                chatBox.scrollTop = chatBox.scrollHeight;
+                
+                // 최신 메시지가 위치한 맨 위로 스크롤 고정
+                chatBox.scrollTop = 0;
             });
         }
 
-        window.loadServerStatus = async function() {
-            try {
-                const docRef = doc(db, "system", "serverStatus");
-                const docSnap = await getDoc(docRef);
+        // ⚡ [서버 전원 상태 실시간 연동]
+        function listenServerStatus() {
+            const docRef = doc(db, "system", "serverStatus");
+            onSnapshot(docRef, (docSnap) => {
                 serverState = docSnap.exists() ? docSnap.data().state || 0 : 0;
-            } catch (e) { serverState = 0; }
-            updateStatusUI();
-        };
+                updateStatusUI();
+            });
+        }
 
         window.toggleServerStatus = async function() {
-            serverState = serverState === 1 ? 0 : 1;
+            const newState = serverState === 1 ? 0 : 1;
             try {
-                await setDoc(doc(db, "system", "serverStatus"), { state: serverState });
+                await setDoc(doc(db, "system", "serverStatus"), { state: newState });
             } catch (e) {}
-            updateStatusUI();
         };
 
         function updateStatusUI() {
@@ -1481,12 +1492,12 @@
             alert(`복사되었습니다: ${text}`);
         };
 
-        // 초기 실행
+        // 초기 실행 (실시간 리스너 작동 개시)
         listenProfiles();
         renderCommands();
         renderRules();
         listenLocations();
-        loadServerStatus();
+        listenServerStatus();
         listenCommunity();
     </script>
 </body>
