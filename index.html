@@ -1080,35 +1080,31 @@
             { name: "세렙 스폰지", coords: "9744 65 8968", img: "" }
         ];
 
-        // ⚡ [수정 후] 프로필 실시간 감지 함수
+        // ⚡ [실시간 프로필 감지 함수 - 단일 리스너]
         function listenProfiles() {
             const homeContainer = document.getElementById("home-profile-container");
             const profileContainer = document.getElementById("profile-container");
-        
-            // profiles 컬렉션의 실시간 변화를 단 1개의 리스너로 감지
+
             onSnapshot(collection(db, "profiles"), (snapshot) => {
-                // DB 변경 사항을 이름 기준으로 맵에 정리
                 const profileDataMap = {};
                 snapshot.forEach((doc) => {
                     profileDataMap[doc.id] = doc.data();
                 });
-        
-                // 화면 컨테이너 비우기
+
                 homeContainer.innerHTML = "";
                 profileContainer.innerHTML = "";
-        
+
                 let totalPokes = 0;
-        
-                // 정해진 멤버 순서대로 카드 생성
+
                 members.forEach((name) => {
                     const data = profileDataMap[name] || {};
                     const pokemonData = data.pokemonList || [];
                     const mcName = data.mcName || "";
                     const starter = data.starter || "";
                     const theme = data.theme || "red";
-        
+
                     totalPokes += pokemonData.length;
-        
+
                     const createCard = () => {
                         const card = document.createElement("div");
                         card.className = "profile-card";
@@ -1117,10 +1113,10 @@
                         const t = themeStyles[theme] || themeStyles['red'];
                         card.style.setProperty('--theme-shadow', t.shadow);
                         card.style.setProperty('--theme-gradient', t.gradient);
-        
+
                         const mainPoke = pokemonData.length > 0 ? pokemonData[0] : null;
                         const avatarUrl = getMemberAvatarUrl(name);
-        
+
                         card.innerHTML = `
                             <div class="card-header">
                                 <div class="user-info">
@@ -1156,13 +1152,44 @@
                         `;
                         return card;
                     };
-        
+
                     homeContainer.appendChild(createCard());
                     profileContainer.appendChild(createCard());
                 });
-        
+
                 const totalEl = document.getElementById("total-poke-count");
                 if (totalEl) totalEl.innerText = `${totalPokes}마리`;
+            });
+        }
+
+        // ⚡ [실시간 좌표 감지 함수]
+        function listenLocations() {
+            const container = document.getElementById("location-container");
+            const docRef = doc(db, "system", "customLocations");
+            
+            onSnapshot(docRef, (docSnap) => {
+                container.innerHTML = "";
+                let locations = [...defaultLocations];
+
+                if (docSnap.exists() && docSnap.data().list) {
+                    locations = [...locations, ...docSnap.data().list];
+                }
+
+                locations.forEach(loc => {
+                    const card = document.createElement("div");
+                    card.className = "location-card";
+                    card.innerHTML = `
+                        ${loc.img ? `<div class="loc-img-box"><img src="${loc.img}" alt="${loc.name}" onerror="this.parentElement.style.display='none'"></div>` : ''}
+                        <div class="loc-body">
+                            <div class="loc-title">${loc.name}</div>
+                            <div class="loc-coords">${loc.coords}</div>
+                        </div>
+                        <div class="loc-footer">
+                            <button class="copy-btn" onclick="copyText('${loc.coords}')"><i class="fa-regular fa-copy"></i> 좌표 복사</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
             });
         }
 
@@ -1283,105 +1310,6 @@
             document.getElementById(`btn-${tabName}`).classList.add('active');
             document.getElementById(`tab-${tabName}`).classList.add('active');
         };
-
-        // ⚡ [실시간 멤버 프로필 연동 적용]
-        function listenProfiles() {
-            const homeContainer = document.getElementById("home-profile-container");
-            const profileContainer = document.getElementById("profile-container");
-
-            members.forEach(name => {
-                const docRef = doc(db, "profiles", name);
-                onSnapshot(docRef, (docSnap) => {
-                    // 데이터가 갱신될 때마다 전체 프로필을 다시 그리도록 처리
-                    renderAllProfilesState();
-                });
-            });
-        }
-
-        async function renderAllProfilesState() {
-            const homeContainer = document.getElementById("home-profile-container");
-            const profileContainer = document.getElementById("profile-container");
-            
-            homeContainer.innerHTML = "";
-            profileContainer.innerHTML = "";
-
-            let totalPokes = 0;
-
-            for (const name of members) {
-                let pokemonData = [];
-                let mcName = "";
-                let starter = "";
-                let theme = "red";
-
-                try {
-                    const docRef = doc(db, "profiles", name);
-                    const docSnap = await getDoc(docRef);
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        pokemonData = data.pokemonList || [];
-                        mcName = data.mcName || "";
-                        starter = data.starter || "";
-                        theme = data.theme || "red";
-                    }
-                } catch (e) {}
-
-                totalPokes += pokemonData.length;
-
-                const createCard = () => {
-                    const card = document.createElement("div");
-                    card.className = "profile-card";
-                    card.onclick = () => openDetailModal(name, pokemonData, mcName, starter);
-                    
-                    const t = themeStyles[theme] || themeStyles['red'];
-                    card.style.setProperty('--theme-shadow', t.shadow);
-                    card.style.setProperty('--theme-gradient', t.gradient);
-
-                    const mainPoke = pokemonData.length > 0 ? pokemonData[0] : null;
-                    const avatarUrl = getMemberAvatarUrl(name);
-
-                    card.innerHTML = `
-                        <div class="card-header">
-                            <div class="user-info">
-                                <div class="avatar">
-                                    <img src="${avatarUrl}" alt="${name}" onerror="this.style.display='none'; this.parentElement.innerText='${name.charAt(0)}';">
-                                </div>
-                                <div>
-                                    <div class="user-name">${name}</div>
-                                    ${mcName ? `<div class="mc-name">@${mcName}</div>` : ''}
-                                </div>
-                            </div>
-                            <div class="header-right-badges">
-                                ${starter ? `
-                                    <div class="starter-badge-top">
-                                        <img src="${getPokeImgUrl(starter)}" alt="${starter}" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
-                                        <span>${starter}</span>
-                                    </div>` : ''}
-                                <span class="poke-badge">${pokemonData.length} 마리</span>
-                            </div>
-                        </div>
-                        
-                        <div class="card-main-poke-box">
-                            ${mainPoke ? `
-                                <img class="poke-char-img" src="${getPokeImgUrl(mainPoke.name)}" alt="${mainPoke.name}" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
-                                <div class="poke-char-info">
-                                    <span>${mainPoke.name}</span>
-                                    <span class="poke-level-tag">[Lv.${mainPoke.level}]</span>
-                                </div>
-                            ` : `
-                                <div style="color:#8a8f9d; font-size:0.9rem; text-align:center; width:100%;">등록된 대표 포망몬이 없습니다.</div>
-                            `}
-                        </div>
-                    `;
-                    return card;
-                };
-
-                homeContainer.appendChild(createCard());
-                profileContainer.appendChild(createCard());
-            }
-
-            const totalEl = document.getElementById("total-poke-count");
-            if (totalEl) totalEl.innerText = `${totalPokes}마리`;
-        }
 
         window.openDetailModal = function(name, pokemonList, mcName, starter) {
             currentMember = name;
@@ -1553,7 +1481,7 @@
             alert(`복사되었습니다: ${text}`);
         };
 
-        // 초기 실행 (실시간 리스너 작동 개시)
+        // 초기 실행
         listenProfiles();
         renderCommands();
         renderRules();
