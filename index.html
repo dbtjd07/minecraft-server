@@ -169,6 +169,40 @@
         }
         .hero-text h2 { margin: 0 0 8px 0; color: #ffffff; font-size: 1.5rem; font-weight: 800; }
         .hero-text p { margin: 0; color: #a0a5b1; font-size: 0.9rem; }
+        
+        /* 대문짝만 한 서버 주소 스타일 */
+        .server-ip-display {
+            background: #090a0e;
+            border: 2px dashed #ffcb05;
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .server-ip-text {
+            font-family: monospace;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #ffcb05;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 203, 5, 0.4);
+        }
+        .ip-copy-btn {
+            background: #ffcb05;
+            color: #0d0e12;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ip-copy-btn:hover { background: #ffd733; transform: scale(1.05); }
+
         .stat-badges { display: flex; gap: 12px; }
         .stat-card {
             background: #0f1015;
@@ -505,7 +539,7 @@
                 </div>
                 <span style="color:#4a5060;">|</span>
                 <span style="font-family:monospace; color:#ffcb05;">25.18.80.235:1234</span>
-                <button class="power-btn" onclick="checkServerStatus()" title="서버 상태 새로고침"><i class="fa-solid fa-power-off"></i></button>
+                <button class="power-btn" onclick="toggleServerStatus()" title="서버 전원 토글"><i class="fa-solid fa-power-off"></i></button>
             </div>
         </div>
         <div class="nav-tabs">
@@ -520,6 +554,19 @@
     <div class="main-container">
         <!-- 0. 메인 홈 탭 -->
         <div id="tab-home" class="tab-content active">
+            
+            <!-- 대문짝만 한 서버 주소 박스 (⚡ 포망몬 서버 정보센터 바로 위) -->
+            <div class="server-ip-display">
+                <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
+                    <i class="fa-solid fa-server" style="color: #ffcb05; font-size: 1.5rem; flex-shrink: 0;"></i>
+                    <div style="overflow: hidden;">
+                        <div style="font-size: 0.75rem; color: #8a8f9d; font-weight: 700; margin-bottom: 2px;">SERVER ADDRESS</div>
+                        <div class="server-ip-text">25.18.80.235:1234</div>
+                    </div>
+                </div>
+                <button class="ip-copy-btn" onclick="copyText('25.18.80.235:1234')"><i class="fa-regular fa-copy"></i> 주소 복사</button>
+            </div>
+
             <div class="hero-banner">
                 <div class="hero-text">
                     <h2>⚡ 포망몬 서버 정보센터</h2>
@@ -678,6 +725,7 @@
         let currentPokemonList = [];
         let currentMemberData = {};
         let selectedTheme = "red";
+        let serverState = 0; // 0: 꺼짐, 1: 켜짐
 
         const pokeNumMap = {
             "이상해씨":1, "이상해풀":2, "이상해꽃":3, "파이리":4, "리자드":5, "리자몽":6,
@@ -739,35 +787,49 @@
             { name: "아르세우스 신전", coords: "-17493 83 32 11" }, { name: "세렙 스폰지", coords: "9744 65 8968" }
         ];
 
-        // 마인크래프트 서버 상태 확인 함수 (API 이용)
-        window.checkServerStatus = async function() {
-            const indicator = document.getElementById("statusIndicator");
-            const statusText = document.getElementById("statusText");
-            
-            statusText.innerText = "확인 중...";
-            indicator.className = "status-indicator";
-
+        // Firebase에서 서버 상태 불러오기 및 화면 업데이트
+        window.loadServerStatus = async function() {
             try {
-                // 외부 공개 API를 이용해 마인크래프트 서버 온라인 여부 체크
-                const res = await fetch("https://api.mcsrvstat.us/v2/25.18.80.235:1234");
-                const data = await res.json();
-
-                if (data.online) {
-                    indicator.classList.add("online");
-                    statusText.innerText = `온라인 (${data.players.online}/${data.players.max})`;
-                    statusText.style.color = "#23a55a";
+                const docRef = doc(db, "system", "serverStatus");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    serverState = docSnap.data().state || 0;
                 } else {
-                    indicator.classList.remove("online");
-                    statusText.innerText = "오프라인 (꺼짐)";
-                    statusText.style.color = "#da373c";
+                    serverState = 0;
                 }
             } catch (e) {
-                // CORS나 네트워크 에러 시 대체 확인 (이미지 패치 방식)
+                serverState = 0;
+            }
+            updateStatusUI();
+        };
+
+        // 전원 버튼 클릭 시 0 <-> 1 토글 후 Firebase에 저장
+        window.toggleServerStatus = async function() {
+            serverState = serverState === 1 ? 0 : 1;
+            try {
+                const docRef = doc(db, "system", "serverStatus");
+                await setDoc(docRef, { state: serverState });
+            } catch (e) {
+                alert("서버 상태 저장 실패");
+            }
+            updateStatusUI();
+        };
+
+        // 화면 UI 반영 함수
+        function updateStatusUI() {
+            const indicator = document.getElementById("statusIndicator");
+            const statusText = document.getElementById("statusText");
+
+            if (serverState === 1) {
+                indicator.classList.add("online");
+                statusText.innerText = "온라인 (켜짐)";
+                statusText.style.color = "#23a55a";
+            } else {
                 indicator.classList.remove("online");
-                statusText.innerText = "오프라인 (확인 불가)";
+                statusText.innerText = "오프라인 (꺼짐)";
                 statusText.style.color = "#da373c";
             }
-        };
+        }
 
         window.switchTab = function(tabName) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -1050,7 +1112,7 @@
         renderCommands();
         renderRules();
         renderLocations();
-        checkServerStatus(); // 페이지 로드 시 서버 상태 체크
+        loadServerStatus(); // 페이지 로드 시 Firebase에서 서버 상태 가져오기
     </script>
 </body>
 </html>
