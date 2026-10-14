@@ -396,6 +396,32 @@
         }
         .poke-level-tag { color: #ffcb05; font-size: 1.05rem; font-weight: 800; }
 
+        /* 프로필 영역 아래 길쭉한 커뮤니티 이동 버튼 */
+        .go-community-banner-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, #1e2330 0%, #15171e 100%);
+            border: 2px solid #23a55a;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(35, 165, 90, 0.2);
+        }
+        .go-community-banner-btn:hover {
+            background: #23a55a;
+            color: #0d0e12;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(35, 165, 90, 0.4);
+        }
+
         /* 주요 좌표 카드 디자인 */
         .location-grid {
             display: grid;
@@ -445,30 +471,28 @@
             background: #111319;
         }
 
-        /* 커뮤니티 / 채팅 스타일 (스크롤바 숨기기 적용) */
+        /* 커뮤니티 / 채팅 스타일 (높이 및 폰트 크기 확대 적용) */
         .chat-container {
             background: #171920;
             border: 1px solid #282c37;
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 18px;
         }
         .chat-box {
             background: #0d0e12;
             border: 1px solid #222631;
-            border-radius: 12px;
-            height: 380px;
+            border-radius: 14px;
+            height: 520px; /* 기존 380px -> 520px로 높이 대폭 증대 */
             overflow-y: auto;
-            padding: 16px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            /* 스크롤바 숨기기 (파이어폭스) */
+            gap: 14px;
             scrollbar-width: none;
         }
-        /* 스크롤바 숨기기 (크롬, 사파리, 엣지) */
         .chat-box::-webkit-scrollbar {
             display: none;
         }
@@ -476,26 +500,26 @@
         .chat-msg {
             background: #171920;
             border: 1px solid #282c37;
-            padding: 10px 14px;
-            border-radius: 10px;
-            max-width: 80%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            width: 100%;
         }
-        .chat-user { font-weight: 800; font-size: 0.85rem; color: #ffcb05; margin-bottom: 4px; }
-        .chat-text { font-size: 0.95rem; color: #ffffff; word-break: break-all; }
-        .chat-time { font-size: 0.7rem; color: #606573; margin-top: 4px; text-align: right; }
+        .chat-user { font-weight: 800; font-size: 0.95rem; color: #ffcb05; margin-bottom: 6px; }
+        .chat-text { font-size: 1.1rem; color: #ffffff; word-break: break-all; line-height: 1.4; }
+        .chat-time { font-size: 0.75rem; color: #606573; margin-top: 6px; text-align: right; }
 
         .chat-input-row {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         .chat-input-row input {
             background: #0d0e12;
             border: 1px solid #2d3240;
             color: white;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.95rem;
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 1.05rem;
             outline: none;
         }
         .chat-input-row input:focus { border-color: #ffcb05; }
@@ -670,8 +694,8 @@
         .btn-save { background: #23a55a; color: white; }
         .btn-del { background: #da373c; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
         .btn-add-loc {
-            background: #23a55a; color: white; border: none; padding: 8px 16px; border-radius: 8px;
-            font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+            background: #23a55a; color: white; border: none; padding: 10px 22px; border-radius: 10px;
+            font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.2s;
         }
         .btn-add-loc:hover { background: #2cd071; }
     </style>
@@ -745,12 +769,21 @@
 
             <div class="section-title"><span><i class="fa-solid fa-users"></i> 멤버 프로필 (클릭하여 확인)</span></div>
             <div class="profile-grid" id="home-profile-container"></div>
+
+            <!-- 프로필 바로 아래 길쭉하게 들어가는 커뮤니티 이동 버튼 -->
+            <button class="go-community-banner-btn" onclick="switchTab('community')">
+                <i class="fa-solid fa-comments"></i> <span>실시간 커뮤니티(채팅) 바로가기</span>
+            </button>
         </div>
 
         <!-- 1. 전체 프로필 탭 -->
         <div id="tab-profiles" class="tab-content">
             <div class="section-title"><span><i class="fa-solid fa-users"></i> 전체 멤버 프로필</span></div>
             <div class="profile-grid" id="profile-container"></div>
+            
+            <button class="go-community-banner-btn" onclick="switchTab('community')">
+                <i class="fa-solid fa-comments"></i> <span>실시간 커뮤니티(채팅) 바로가기</span>
+            </button>
         </div>
 
         <!-- 2. 명령어 탭 -->
@@ -774,15 +807,15 @@
             <div class="location-grid" id="location-container"></div>
         </div>
 
-        <!-- 5. 커뮤니티 탭 -->
+        <!-- 5. 커뮤니티 탭 (확대 적용) -->
         <div id="tab-community" class="tab-content">
             <div class="section-title"><span><i class="fa-solid fa-comments"></i> 서버 실시간 커뮤니티</span></div>
             <div class="chat-container">
                 <div id="chatBox" class="chat-box"></div>
                 <div class="chat-input-row">
-                    <input type="text" id="chatNick" placeholder="닉네임" style="flex:1; max-width:140px;">
+                    <input type="text" id="chatNick" placeholder="닉네임" style="flex:1; max-width:160px;">
                     <input type="text" id="chatMsg" placeholder="메시지를 입력하세요..." style="flex:4;" onkeypress="if(event.key==='Enter') sendChatMessage()">
-                    <button class="btn-add-loc" onclick="sendChatMessage()" style="padding:12px 20px;">전송</button>
+                    <button class="btn-add-loc" onclick="sendChatMessage()" style="padding:14px 26px;">전송</button>
                 </div>
             </div>
         </div>
@@ -975,7 +1008,7 @@
             "페라페", "화강돌", "딥상어동", "한바이트", "한카리아스", "먹고자", "리오르", "루카리오", "히포포타스", "하마돈",
             "스콜피", "드래피온", "삐딱구리", "독개굴", "무스틈니", "형광어", "네오라이트", "타만타", "눈쓰개", "눈설왕",
             "포푸니라", "자포코일", "내룸벨트", "거대코뿌리", "덩쿠림보", "에레키블", "마그마번", "토게키스", "메가자리", "리피아",
-            "글레이시아", "글라이온", "맘모꾸리", "폴리곤Z", "엘레이드", "대코파с", "야느와르몽", "눈여아", "로토무", "유크시",
+            "글레이시아", "글라이온", "맘모꾸리", "폴리곤Z", "엘레이드", "대코파스", "야느와르몽", "눈여아", "로토무", "유크시",
             "엠라이트", "아그놈", "디아루가", "펄기아", "히드런", "레지기가스", "기라티나", "크레세리아", "피오네", "마나피",
             "다크라이", "쉐이미", "아르세우스", "비크티니", "주리비얀", "샤비", "샤로다", "뚜꾸리", "차오꿀", "염무왕",
             "수댕이", "쌍검자비", "대검귀", "보르쥐", "보르그", "요테리", "하데리어", "바랜드", "쌔비냥", "레파르다스",
@@ -1084,7 +1117,7 @@
             { name: "세렙 스폰지", coords: "9744 65 8968", img: "" }
         ];
 
-        // ⚡ [실시간 프로필 감지 함수 - 단일 리스너 및 즉시 반영]
+        // ⚡ [실시간 프로필 감지 함수]
         function listenProfiles() {
             const homeContainer = document.getElementById("home-profile-container");
             const profileContainer = document.getElementById("profile-container");
@@ -1254,7 +1287,6 @@
         };
 
         function listenCommunity() {
-            // timestamp 기준 내림차순(desc) 정렬하여 최신 메시지가 위에 오도록 설정
             const q = query(collection(db, "chats"), orderBy("timestamp", "desc"));
             
             onSnapshot(q, (snapshot) => {
@@ -1273,7 +1305,6 @@
                     `;
                 });
                 
-                // 최신 메시지가 위치한 맨 위로 스크롤 고정
                 chatBox.scrollTop = 0;
             });
         }
@@ -1489,7 +1520,7 @@
             alert(`복사되었습니다: ${text}`);
         };
 
-        // 초기 실행 (실시간 리스너 작동 개시)
+        // 초기 실행
         listenProfiles();
         renderCommands();
         renderRules();
