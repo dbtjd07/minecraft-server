@@ -10,7 +10,7 @@
     <meta property="og:title" content="포망몬 마크 서버 대시보드 ⚡">
     <meta property="og:description" content="멤버들의 포망몬 라인업, 주요 좌표, 서버 규칙 및 명령어를 실시간으로 확인하세요!">
     <meta property="og:image" content="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
-    <meta name="theme-color" content="#e3350d"> <!-- 디스코드 임베드 좌측 띠 색상 -->
+    <meta name="theme-color" content="#e3350d">
 
     <!-- Favicon 404 에러 방지용 -->
     <link rel="icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
@@ -38,20 +38,20 @@
             z-index: 100;
         }
         .header-container {
-            max-width: 100%; /* 기존 1300px 제한 해제 */
+            max-width: 100%;
             width: 100%;
             margin: 0;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* 왼쪽 정렬 */
-            gap: 380px; /* 로고와 탭 메뉴 사이의 간격 */
+            justify-content: flex-start;
+            gap: 380px;
             padding: 0 10px;
         }
         .header-title { 
             display: flex; 
             align-items: center; 
             gap: 10px;
-            cursor: pointer; /* 클릭 가능한 커서 지정 */
+            cursor: pointer;
             transition: opacity 0.2s;
         }
         .header-title:hover {
@@ -330,7 +330,7 @@
             font-weight: 900; color: #ffffff; font-size: 1.2rem;
             box-shadow: 0 3px 10px rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.2);
-            overflow: hidden; /* 이미지가 원형 밖으로 튀어나가지 않도록 처리 */
+            overflow: hidden;
         }
         .avatar img {
             width: 100%;
@@ -673,7 +673,7 @@
 
     <header>
         <div class="header-container">
-            <!-- 좌측: 로고 + 포망몬 마크 서버 타이틀 (클릭 시 새로고침 기능 추가) -->
+            <!-- 좌측: 로고 + 포망몬 마크 서버 타이틀 -->
             <div class="header-title" onclick="location.reload()" title="클릭하여 새로고침">
                 <h1><div class="pokeball-icon"></div> 포망몬 마크 서버</h1>
             </div>
@@ -694,7 +694,6 @@
         <!-- 0. 메인 홈 탭 -->
         <div id="tab-home" class="tab-content active">
             
-            <!-- 중앙 정렬된 서버 주소 및 상태/전원 카드 배너 -->
             <div id="serverHeroCard" class="server-hero-card offline">
                 <div class="server-status-row">
                     <div id="statusIndicator" class="status-indicator"></div>
@@ -759,7 +758,7 @@
             <div class="rules-list" id="rules-container"></div>
         </div>
 
-        <!-- 4. 좌표 탭 (추가 기능 + 이미지 파일 업로드 지원) -->
+        <!-- 4. 좌표 탭 -->
         <div id="tab-locations" class="tab-content">
             <div class="section-title">
                 <span><i class="fa-solid fa-map-location-dot"></i> 주요 좌표 목록</span>
@@ -819,10 +818,7 @@
                 </div>
             </div>
 
-            <!-- 스타팅 포망몬 대형 배너 -->
             <div id="detailStarterBox" style="display:none;"></div>
-
-            <!-- 보유 포망몬 리스트 -->
             <div id="detailList" class="poke-modal-list"></div>
         </div>
     </div>
@@ -849,7 +845,7 @@
 
                 <div class="input-group">
                     <label>스타팅 포망몬 선택/입력</label>
-                    <input type="text" id="editStarter" class="form-input" placeholder="예: 브케인, 파이리, 이상해씨, 꼬부기, 피카츄 등">
+                    <input type="text" id="editStarter" class="form-input" placeholder="예: 브케인, 파이리, 이상해씨 등">
                 </div>
 
                 <div class="input-group">
@@ -910,7 +906,6 @@
         let selectedTheme = "red";
         let serverState = 0;
 
-        // 멤버별 아바타 파일명 매핑
         const memberAvatarMap = {
             "민규": "mingyu",
             "영재": "yeongjae",
@@ -925,7 +920,6 @@
             return `image/${key}.png`;
         }
 
-        // 전국도감 1~1025번 포켓몬 이름 최적화 매핑 (데이터 전체 유지)
         const pokeNumList = [
             "이상해씨", "이상해풀", "이상해꽃", "파이리", "리자드", "리자몽", "꼬부기", "어니부기", "거북왕", "캐터피",
             "단데기", "버터플", "뿔충이", "딱충이", "독침붕", "구구", "피죤", "피죤투", "꼬렛", "레트라",
@@ -967,7 +961,7 @@
             "아공이", "쉘곤", "보만다", "메탕", "메탕구", "메타그로스", "레지락", "레지아이스", "레지스틸", "라티아스",
             "라티오스", "가이오가", "그란돈", "레쿠쟈", "지라치", "테오키스", "모부기", "수풀부기", "토대부기", "불꽃숭이",
             "파이숭이", "초염몽", "팽도리", "팽태자", "엠페르트", "찌르꼬", "찌르버드", "찌르호크", "비버니", "비버통",
-            "귀뚤뚜기", "귀뚤톡크", "꼬링크", "럭시오", "렌트라", "꼬몽울", "로즈레이드", "두개도스", "램펄드", "방패톱с".replace('с', '스'), "바리톱스",
+            "귀뚤뚜기", "귀뚤톡크", "꼬링크", "럭시오", "렌트라", "꼬몽울", "로즈레이드", "두개도스", "램펄드", "방패톱스", "바리톱스",
             "도롱충이", "도롱마담", "나메일", "세꿀버리", "비퀸", "파치리스", "브이젤", "플로젤", "체리버",
             "체리꼬", "깝질무", "트리토돈", "겟핸보숭", "흔들풍손", "둥실라이드", "이어롤", "이어롭", "무우마직", "돈크로우",
             "나옹마", "몬냥이", "랑딸랑", "스컹뿡", "스컹탱크", "동미러", "동탁군", "꼬지지", "흉내내", "핑복",
@@ -1075,7 +1069,6 @@
             "전설 포망몬으로만 하늘 날기 가능 (일반포망몬 X)", "전설 보스 확률 명령어 확인 금지"
         ];
 
-        // 채팅으로 전달된 전체 주요 좌표 목록
         const defaultLocations = [
             { name: "기술 할배", coords: "968 ~ 8", img: "" },
             { name: "드래곤 체육관", coords: "2665 78 194", img: "" },
@@ -1087,40 +1080,39 @@
             { name: "세렙 스폰지", coords: "9744 65 8968", img: "" }
         ];
 
-        // 좌표 불러오기
-        window.loadLocations = async function() {
+        // ⚡ [실시간 좌표 연동 적용]
+        function listenLocations() {
             const container = document.getElementById("location-container");
-            container.innerHTML = "";
-            let locations = [...defaultLocations];
+            const docRef = doc(db, "system", "customLocations");
+            
+            onSnapshot(docRef, (docSnap) => {
+                container.innerHTML = "";
+                let locations = [...defaultLocations];
 
-            try {
-                const docRef = doc(db, "system", "customLocations");
-                const docSnap = await getDoc(docRef);
                 if (docSnap.exists() && docSnap.data().list) {
                     locations = [...locations, ...docSnap.data().list];
                 }
-            } catch (e) {}
 
-            locations.forEach(loc => {
-                const card = document.createElement("div");
-                card.className = "location-card";
-                card.innerHTML = `
-                    ${loc.img ? `<div class="loc-img-box"><img src="${loc.img}" alt="${loc.name}" onerror="this.parentElement.style.display='none'"></div>` : ''}
-                    <div class="loc-body">
-                        <div class="loc-title">${loc.name}</div>
-                        <div class="loc-coords">${loc.coords}</div>
-                    </div>
-                    <div class="loc-footer">
-                        <button class="copy-btn" onclick="copyText('${loc.coords}')"><i class="fa-regular fa-copy"></i> 좌표 복사</button>
-                    </div>
-                `;
-                container.appendChild(card);
+                locations.forEach(loc => {
+                    const card = document.createElement("div");
+                    card.className = "location-card";
+                    card.innerHTML = `
+                        ${loc.img ? `<div class="loc-img-box"><img src="${loc.img}" alt="${loc.name}" onerror="this.parentElement.style.display='none'"></div>` : ''}
+                        <div class="loc-body">
+                            <div class="loc-title">${loc.name}</div>
+                            <div class="loc-coords">${loc.coords}</div>
+                        </div>
+                        <div class="loc-footer">
+                            <button class="copy-btn" onclick="copyText('${loc.coords}')"><i class="fa-regular fa-copy"></i> 좌표 복사</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
             });
-        };
+        }
 
         window.openAddLocModal = () => { document.getElementById("addLocModal").style.display = "flex"; };
         
-        // 이미지 파일 업로드 처리
         window.saveNewLocation = async function() {
             const title = document.getElementById("locTitleInput").value.trim();
             const coords = document.getElementById("locCoordsInput").value.trim();
@@ -1142,7 +1134,6 @@
                     document.getElementById("locTitleInput").value = "";
                     document.getElementById("locCoordsInput").value = "";
                     fileInput.value = "";
-                    loadLocations();
                 } catch(e) {
                     alert("저장 실패: " + e.message);
                 }
@@ -1159,7 +1150,6 @@
             }
         };
 
-        // 커뮤니티 채팅 기능
         window.sendChatMessage = async function() {
             const nick = document.getElementById("chatNick").value.trim() || "익명";
             const msg = document.getElementById("chatMsg").value.trim();
@@ -1197,7 +1187,6 @@
             });
         }
 
-        // 서버 상태 연동
         window.loadServerStatus = async function() {
             try {
                 const docRef = doc(db, "system", "serverStatus");
@@ -1240,7 +1229,21 @@
             document.getElementById(`tab-${tabName}`).classList.add('active');
         };
 
-        window.loadProfiles = async function() {
+        // ⚡ [실시간 멤버 프로필 연동 적용]
+        function listenProfiles() {
+            const homeContainer = document.getElementById("home-profile-container");
+            const profileContainer = document.getElementById("profile-container");
+
+            members.forEach(name => {
+                const docRef = doc(db, "profiles", name);
+                onSnapshot(docRef, (docSnap) => {
+                    // 데이터가 갱신될 때마다 전체 프로필을 다시 그리도록 처리
+                    renderAllProfilesState();
+                });
+            });
+        }
+
+        async function renderAllProfilesState() {
             const homeContainer = document.getElementById("home-profile-container");
             const profileContainer = document.getElementById("profile-container");
             
@@ -1321,7 +1324,8 @@
                 profileContainer.appendChild(createCard());
             }
 
-            document.getElementById("total-poke-count").innerText = `${totalPokes}마리`;
+            const totalEl = document.getElementById("total-poke-count");
+            if (totalEl) totalEl.innerText = `${totalPokes}마리`;
         }
 
         window.openDetailModal = function(name, pokemonList, mcName, starter) {
@@ -1461,7 +1465,6 @@
 
                 alert("수정이 완료되었습니다!");
                 closeModal('editModal');
-                loadProfiles();
             } catch(e) {
                 alert("저장 실패: Firebase 설정을 확인해주세요.");
             }
@@ -1495,11 +1498,11 @@
             alert(`복사되었습니다: ${text}`);
         };
 
-        // 초기 실행
-        loadProfiles();
+        // 초기 실행 (실시간 리스너 작동 개시)
+        listenProfiles();
         renderCommands();
         renderRules();
-        loadLocations();
+        listenLocations();
         loadServerStatus();
         listenCommunity();
     </script>
