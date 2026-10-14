@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>포켓몬 마크 서버 대시보드</title>
+    <title>포망몬 마크 서버 대시보드</title>
+    <!-- Favicon 404 에러 방지용 -->
+    <link rel="icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
     <!-- Google Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,14 +30,29 @@
             top: 0;
             z-index: 100;
         }
-        .header-title { text-align: center; margin-bottom: 18px; }
+        .header-title { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 18px; 
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
         .header-title h1 {
             color: #ffffff;
             font-size: 1.8rem;
             margin: 0;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
             font-weight: 900;
         }
@@ -59,6 +76,47 @@
             border-radius: 50%;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Server Status Widget */
+        .server-status-widget {
+            background: #171920;
+            border: 1px solid #282c37;
+            padding: 8px 14px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+        }
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #da373c;
+            box-shadow: 0 0 8px #da373c;
+            transition: all 0.3s;
+        }
+        .status-indicator.online {
+            background: #23a55a;
+            box-shadow: 0 0 10px #23a55a;
+        }
+        .power-btn {
+            background: #252833;
+            border: 1px solid #3b4050;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .power-btn:hover {
+            background: #e3350d;
+            border-color: #e3350d;
+        }
 
         /* Navigation Tabs */
         .nav-tabs {
@@ -156,7 +214,6 @@
             gap: 18px;
         }
         
-        /* 🔥 11가지 그라데이션 카드 디자인 🔥 */
         .profile-card {
             background: #15171e;
             border: 2px solid transparent;
@@ -227,7 +284,6 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
         }
 
-        /* 🔥 하단 메인 포켓몬 박스 레이아웃 (캐릭터 + 이름 [레벨]) 🔥 */
         .card-main-poke-box {
             background: #08090c;
             border-radius: 14px;
@@ -313,7 +369,6 @@
         .btn-mini-edit:hover { background: #e3350d; color: #fff; border-color: #e3350d; }
         .close-btn { background: none; border: none; color: #808592; font-size: 1.3rem; cursor: pointer; }
 
-        /* 스타팅 포켓몬 가로형 배너 */
         .starter-hero-banner {
             background: linear-gradient(135deg, rgba(255, 203, 5, 0.15) 0%, rgba(227, 53, 13, 0.15) 100%), #0c0d11;
             border: 2px solid #ffcb05;
@@ -347,7 +402,6 @@
             filter: drop-shadow(0 6px 12px rgba(0,0,0,0.8));
         }
 
-        /* 모달 내부 포켓몬 목록 (캐릭터 + 이름 [레벨]) */
         .poke-modal-list {
             display: flex;
             flex-direction: column;
@@ -386,7 +440,6 @@
             color: #ffffff;
         }
 
-        /* Input Controls */
         .input-group { margin-bottom: 14px; }
         .input-group label { display: block; color: #a0a5b1; font-size: 0.82rem; font-weight: bold; margin-bottom: 6px; }
         .form-input {
@@ -402,7 +455,6 @@
         }
         .edit-poke-row input:focus { border-color: #ffcb05; }
 
-        /* 11가지 그라데이션 색상 선택기 */
         .color-picker {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -442,7 +494,19 @@
 
     <header>
         <div class="header-title">
-            <h1><div class="pokeball-icon"></div> 포켓몬 마크 서버</h1>
+            <div class="header-left">
+                <h1><div class="pokeball-icon"></div> 포망몬 마크 서버</h1>
+            </div>
+            <!-- 전원버튼 및 서버 상태 위젯 -->
+            <div class="server-status-widget">
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <div id="statusIndicator" class="status-indicator"></div>
+                    <span id="statusText" style="font-weight:bold; color:#a0a5b1;">확인 중...</span>
+                </div>
+                <span style="color:#4a5060;">|</span>
+                <span style="font-family:monospace; color:#ffcb05;">25.18.80.235:1234</span>
+                <button class="power-btn" onclick="checkServerStatus()" title="서버 상태 새로고침"><i class="fa-solid fa-power-off"></i></button>
+            </div>
         </div>
         <div class="nav-tabs">
             <button class="tab-btn active" id="btn-home" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> 메인 (홈)</button>
@@ -458,8 +522,8 @@
         <div id="tab-home" class="tab-content active">
             <div class="hero-banner">
                 <div class="hero-text">
-                    <h2>⚡ 포켓몬 서버 정보센터</h2>
-                    <p>멤버들의 포켓몬 라인업과 서버 주요 좌표/명령어를 확인하세요.</p>
+                    <h2>⚡ 포망몬 서버 정보센터</h2>
+                    <p>멤버들의 포망몬 라인업과 서버 주요 좌표/명령어를 확인하세요.</p>
                 </div>
                 <div class="stat-badges">
                     <div class="stat-card"><div class="num">6명</div><div class="label">서버 멤버</div></div>
@@ -474,7 +538,7 @@
                 </div>
                 <div class="quick-card" onclick="switchTab('rules')">
                     <h3><i class="fa-solid fa-ban" style="color:#e3350d;"></i> 서버 금지 규칙</h3>
-                    <p>TP, 인벤세이브, 포켓힐 등 제한사항 보기</p>
+                    <p>TP, 인벤세이브, 포망몬힐 등 제한사항 보기</p>
                 </div>
                 <div class="quick-card" onclick="switchTab('locations')">
                     <h3><i class="fa-solid fa-location-dot" style="color:#23a55a;"></i> 핵심 위치 좌표</h3>
@@ -525,10 +589,10 @@
                 </div>
             </div>
 
-            <!-- 스타팅 포켓몬 대형 배너 -->
+            <!-- 스타팅 포망몬 대형 배너 -->
             <div id="detailStarterBox" style="display:none;"></div>
 
-            <!-- 보유 포켓몬 리스트 (캐릭터 + 이름 [레벨]) -->
+            <!-- 보유 포망몬 리스트 -->
             <div id="detailList" class="poke-modal-list"></div>
         </div>
     </div>
@@ -554,7 +618,7 @@
                 </div>
 
                 <div class="input-group">
-                    <label>스타팅 포켓몬 선택/입력</label>
+                    <label>스타팅 포망몬 선택/입력</label>
                     <input type="text" id="editStarter" class="form-input" placeholder="예: 브케인, 파이리, 이상해씨, 꼬부기, 피카츄 등">
                 </div>
 
@@ -581,9 +645,9 @@
                 </div>
 
                 <div class="input-group" style="margin-top: 20px;">
-                    <label>보유 포켓몬 및 레벨 수정</label>
+                    <label>보유 포망몬 및 레벨 수정</label>
                     <div id="pokeEditList" style="max-height: 200px; overflow-y: auto;"></div>
-                    <button onclick="addPokeInput()" style="width:100%; background:none; border:1px dashed #23a55a; color:#23a55a; padding:10px; border-radius:8px; margin-top:8px; font-weight:bold; cursor:pointer;">+ 포켓몬 추가</button>
+                    <button onclick="addPokeInput()" style="width:100%; background:none; border:1px dashed #23a55a; color:#23a55a; padding:10px; border-radius:8px; margin-top:8px; font-weight:bold; cursor:pointer;">+ 포망몬 추가</button>
                 </div>
 
                 <button class="btn-action btn-save" onclick="saveData()">최종 저장하기</button>
@@ -652,10 +716,10 @@
         };
 
         const commandsData = [
-            { cmd: "/checkspawns", desc: "일반 포켓몬 스폰 확률 확인" },
-            { cmd: "/checkspawns legendary", desc: "전설 포켓몬 스폰 확률 확인" },
-            { cmd: "/ivs (슬롯번호)", desc: "포켓몬 개체값 확인" },
-            { cmd: "/evs (슬롯번호)", desc: "포켓몬 노력치 확인" },
+            { cmd: "/checkspawns", desc: "일반 포망몬 스폰 확률 확인" },
+            { cmd: "/checkspawns legendary", desc: "전설 포망몬 스폰 확률 확인" },
+            { cmd: "/ivs (슬롯번호)", desc: "포망몬 개체값 확인" },
+            { cmd: "/evs (슬롯번호)", desc: "포망몬 노력치 확인" },
             { cmd: "/effect give (본인닉) minecraft:saturation 999999 99", desc: "무한 배고픔 회복" },
             { cmd: "/effect give (본인닉) minecraft:night_vision 999999 99", desc: "무한 야간투시 버프" },
             { cmd: "/kill @e[type=item]", desc: "바닥 떨어진 아이템 전체 삭제" }
@@ -663,9 +727,9 @@
 
         const rulesData = [
             "tp 금지 (tp X)", "인벤 세이브 금지 (인벤세이브 X)", "포화 버프 금지 (포화 버프 X)",
-            "포켓힐 금지 (포켓힐 X)", "물체육관 돈 복사 금지", "전설 포켓몬 10레벨 고정",
-            "나갔다오기 컨 금지", "치료기 섬손곡괭이 수확 금지", "스타팅 랜덤 포켓몬 고정",
-            "전설 포켓몬으로만 하늘 날기 가능 (일반포켓몬 X)", "전설 보스 확률 명령어 확인 금지"
+            "포망몬힐 금지 (포망몬힐 X)", "물체육관 돈 복사 금지", "전설 포망몬 10레벨 고정",
+            "나갔다오기 컨 금지", "치료기 섬손곡괭이 수확 금지", "스타팅 랜덤 포망몬 고정",
+            "전설 포망몬으로만 하늘 날기 가능 (일반포망몬 X)", "전설 보스 확률 명령어 확인 금지"
         ];
 
         const locationsData = [
@@ -674,6 +738,36 @@
             { name: "집 마을", coords: "-200 65 600" }, { name: "중간 마을 (기술할배 근처)", coords: "-7262 63 -1001" },
             { name: "아르세우스 신전", coords: "-17493 83 32 11" }, { name: "세렙 스폰지", coords: "9744 65 8968" }
         ];
+
+        // 마인크래프트 서버 상태 확인 함수 (API 이용)
+        window.checkServerStatus = async function() {
+            const indicator = document.getElementById("statusIndicator");
+            const statusText = document.getElementById("statusText");
+            
+            statusText.innerText = "확인 중...";
+            indicator.className = "status-indicator";
+
+            try {
+                // 외부 공개 API를 이용해 마인크래프트 서버 온라인 여부 체크
+                const res = await fetch("https://api.mcsrvstat.us/v2/25.18.80.235:1234");
+                const data = await res.json();
+
+                if (data.online) {
+                    indicator.classList.add("online");
+                    statusText.innerText = `온라인 (${data.players.online}/${data.players.max})`;
+                    statusText.style.color = "#23a55a";
+                } else {
+                    indicator.classList.remove("online");
+                    statusText.innerText = "오프라인 (꺼짐)";
+                    statusText.style.color = "#da373c";
+                }
+            } catch (e) {
+                // CORS나 네트워크 에러 시 대체 확인 (이미지 패치 방식)
+                indicator.classList.remove("online");
+                statusText.innerText = "오프라인 (확인 불가)";
+                statusText.style.color = "#da373c";
+            }
+        };
 
         window.switchTab = function(tabName) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -754,7 +848,7 @@
                                     <span class="poke-level-tag">[Lv.${mainPoke.level}]</span>
                                 </div>
                             ` : `
-                                <div style="color:#8a8f9d; font-size:0.9rem; text-align:center; width:100%;">등록된 대표 포켓몬이 없습니다.</div>
+                                <div style="color:#8a8f9d; font-size:0.9rem; text-align:center; width:100%;">등록된 대표 포망몬이 없습니다.</div>
                             `}
                         </div>
                     `;
@@ -782,7 +876,7 @@
                     <div class="starter-hero-banner">
                         <div class="starter-hero-text">
                             <div class="title-tag">🔥 STARTER POKEMON</div>
-                            <div class="poke-name-lg">스타팅 포켓몬: ${starter}</div>
+                            <div class="poke-name-lg">스타팅 포망몬: ${starter}</div>
                         </div>
                         <img class="starter-hero-img-lg" src="${getPokeImgUrl(starter)}" alt="${starter}" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
                     </div>
@@ -793,7 +887,7 @@
 
             const listDiv = document.getElementById("detailList");
             if (pokemonList.length === 0) {
-                listDiv.innerHTML = `<div style="color:#8a8f9d; text-align:center; padding:40px 0;">등록된 포켓몬이 없습니다.</div>`;
+                listDiv.innerHTML = `<div style="color:#8a8f9d; text-align:center; padding:40px 0;">등록된 포망몬이 없습니다.</div>`;
             } else {
                 listDiv.innerHTML = pokemonList.map(p => `
                     <div class="poke-modal-row">
@@ -864,7 +958,7 @@
                 const row = document.createElement("div");
                 row.className = "edit-poke-row";
                 row.innerHTML = `
-                    <input type="text" value="${p.name}" placeholder="포켓몬 이름" onchange="updateTempData(${idx}, 'name', this.value)" style="flex:2;">
+                    <input type="text" value="${p.name}" placeholder="포망몬 이름" onchange="updateTempData(${idx}, 'name', this.value)" style="flex:2;">
                     <input type="number" value="${p.level}" placeholder="레벨" onchange="updateTempData(${idx}, 'level', this.value)" style="flex:1;">
                     <button class="btn-del" onclick="removePokeInput(${idx})"><i class="fa-solid fa-trash"></i></button>
                 `;
@@ -951,10 +1045,12 @@
             alert(`복사되었습니다: ${text}`);
         };
 
+        // 초기 실행
         loadProfiles();
         renderCommands();
         renderRules();
         renderLocations();
+        checkServerStatus(); // 페이지 로드 시 서버 상태 체크
     </script>
 </body>
 </html>
