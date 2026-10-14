@@ -20,18 +20,18 @@
             min-height: 100vh;
         }
 
-        /* Header Layout - 로고는 왼쪽, 탭 메뉴는 중앙 배치 */
+        /* Header Layout - 로고는 왼쪽, 탭 메뉴는 오른쪽/중앙 배치 */
         header {
             background: rgba(22, 24, 31, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 2px solid #e3350d;
-            padding: 18px 20px 0 20px;
+            padding: 14px 24px;
             position: sticky;
             top: 0;
             z-index: 100;
         }
         .header-container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -43,11 +43,10 @@
             display: flex; 
             align-items: center; 
             gap: 10px;
-            margin-bottom: 12px;
         }
         .header-title h1 {
             color: #ffffff;
-            font-size: 1.6rem;
+            font-size: 1.55rem;
             margin: 0;
             display: flex;
             align-items: center;
@@ -75,21 +74,18 @@
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Navigation Tabs - 중앙 정렬 */
+        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
-            justify-content: center;
-            gap: 6px;
-            max-width: 1200px;
-            margin: 0 auto;
+            align-items: center;
+            gap: 4px;
             overflow-x: auto;
-            width: 100%;
         }
         .tab-btn {
             background: transparent;
             color: #9095a0;
             border: none;
-            padding: 12px 18px;
+            padding: 10px 16px;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
@@ -143,8 +139,7 @@
             gap: 12px;
         }
         .status-indicator {
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border-radius: 50%;
             background: #da373c;
             box-shadow: 0 0 14px #da373c;
@@ -166,7 +161,6 @@
             text-shadow: 0 0 12px rgba(35, 165, 90, 0.4);
         }
 
-        /* 주소와 복사 버튼 한 줄 배치 */
         .server-ip-copy-row {
             display: flex;
             align-items: center;
@@ -200,7 +194,6 @@
         }
         .ip-copy-btn-lg:hover { background: #ffd733; transform: scale(1.05); }
 
-        /* 전원 버튼 아래쪽 배치 */
         .power-btn-lg {
             background: #252833;
             border: 2px solid #3b4050;
@@ -352,8 +345,7 @@
             font-weight: 800;
         }
         .starter-badge-top img {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             object-fit: contain;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
         }
@@ -369,8 +361,7 @@
             min-height: 80px;
         }
         .poke-char-img {
-            width: 65px;
-            height: 65px;
+            width: 65px; height: 65px;
             object-fit: contain;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
             flex-shrink: 0;
@@ -386,7 +377,7 @@
         }
         .poke-level-tag { color: #ffcb05; font-size: 1.05rem; font-weight: 800; }
 
-        /* 주요 좌표 카드 (이미지 지원) */
+        /* 주요 좌표 카드 디자인 */
         .location-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -405,6 +396,7 @@
         .location-card:hover {
             border-color: #23a55a;
             transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(35, 165, 90, 0.2);
         }
         .loc-img-box {
             width: 100%;
@@ -421,16 +413,16 @@
             height: 100%;
             object-fit: cover;
         }
-        .loc-body { padding: 16px; }
-        .loc-title { font-size: 1.1rem; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
-        .loc-coords { color: #23a55a; font-family: monospace; font-weight: bold; font-size: 0.95rem; margin-bottom: 12px; }
+        .loc-body { padding: 18px; }
+        .loc-title { font-size: 1.15rem; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        .loc-coords { color: #23a55a; font-family: monospace; font-weight: bold; font-size: 1rem; margin-bottom: 4px; word-break: break-all; }
         
         .loc-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #222631;
-            padding: 10px 16px;
+            padding: 12px 18px;
             background: #111319;
         }
 
@@ -492,7 +484,7 @@
         }
         .rule-card { border-left: 4px solid #e3350d; }
         .rule-card i { color: #e3350d; font-size: 1.2rem; }
-        .copy-btn { background: none; border: none; color: #808592; cursor: pointer; transition: color 0.2s; }
+        .copy-btn { background: none; border: none; color: #808592; cursor: pointer; transition: color 0.2s; font-weight: bold; }
         .copy-btn:hover { color: #fff; }
 
         /* MODAL STYLES */
@@ -534,6 +526,75 @@
         .btn-mini-edit:hover { background: #e3350d; color: #fff; border-color: #e3350d; }
         .close-btn { background: none; border: none; color: #808592; font-size: 1.3rem; cursor: pointer; }
 
+        .starter-hero-banner {
+            background: linear-gradient(135deg, rgba(255, 203, 5, 0.15) 0%, rgba(227, 53, 13, 0.15) 100%), #0c0d11;
+            border: 2px solid #ffcb05;
+            border-radius: 16px;
+            padding: 14px 22px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 20px rgba(255, 203, 5, 0.25);
+        }
+        .starter-hero-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .starter-hero-text .title-tag {
+            color: #ffcb05;
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+        .starter-hero-text .poke-name-lg {
+            color: #ffffff;
+            font-size: 1.45rem;
+            font-weight: 900;
+        }
+        .starter-hero-img-lg {
+            width: 75px; height: 75px;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.8));
+        }
+
+        .poke-modal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .poke-modal-row {
+            background: #08090c;
+            border: 1px solid #222631;
+            border-radius: 14px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: all 0.2s;
+        }
+        .poke-modal-row:hover {
+            border-color: #ffcb05;
+            transform: translateX(4px);
+        }
+        .poke-modal-img {
+            width: 65px; height: 65px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7));
+            flex-shrink: 0;
+        }
+        .poke-modal-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #ffffff;
+        }
+
         .input-group { margin-bottom: 14px; }
         .input-group label { display: block; color: #a0a5b1; font-size: 0.82rem; font-weight: bold; margin-bottom: 6px; }
         .form-input {
@@ -542,10 +603,46 @@
         }
         .form-input:focus { border-color: #ffcb05; }
 
+        .edit-poke-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+        .edit-poke-row input {
+            background: #0c0d11; border: 1px solid #2d3240; color: white; padding: 10px;
+            border-radius: 8px; font-size: 0.9rem; outline: none;
+        }
+        .edit-poke-row input:focus { border-color: #ffcb05; }
+
+        .color-picker {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .color-option {
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .color-option:hover { transform: scale(1.06); }
+        .color-option.selected {
+            border-color: #ffffff;
+            box-shadow: 0 0 12px rgba(255,255,255,0.9);
+            transform: scale(1.06);
+        }
+
         .btn-action {
             width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 0.95rem;
         }
         .btn-save { background: #23a55a; color: white; }
+        .btn-del { background: #da373c; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
         .btn-add-loc {
             background: #23a55a; color: white; border: none; padding: 8px 16px; border-radius: 8px;
             font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
@@ -557,12 +654,12 @@
 
     <header>
         <div class="header-container">
-            <!-- 몬스터볼 로고 + 포망몬 마크 서버 타이틀 (왼쪽) -->
+            <!-- 좌측: 로고 + 포망몬 마크 서버 타이틀 -->
             <div class="header-title">
                 <h1><div class="pokeball-icon"></div> 포망몬 마크 서버</h1>
             </div>
 
-            <!-- 홈/프로필/명령어 등 메뉴 탭 (중앙 정렬) -->
+            <!-- 우측: 메뉴 탭 버튼 모음 -->
             <div class="nav-tabs">
                 <button class="tab-btn active" id="btn-home" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> 메인 (홈)</button>
                 <button class="tab-btn" id="btn-profiles" onclick="switchTab('profiles')"><i class="fa-solid fa-id-card"></i> 프로필</button>
@@ -621,9 +718,7 @@
                 </div>
             </div>
 
-            <div class="section-title">
-                <span><i class="fa-solid fa-users"></i> 멤버 프로필 (클릭하여 확인)</span>
-            </div>
+            <div class="section-title"><span><i class="fa-solid fa-users"></i> 멤버 프로필 (클릭하여 확인)</span></div>
             <div class="profile-grid" id="home-profile-container"></div>
         </div>
 
@@ -645,7 +740,7 @@
             <div class="rules-list" id="rules-container"></div>
         </div>
 
-        <!-- 4. 좌표 탭 (추가 기능 + 이미지 지원) -->
+        <!-- 4. 좌표 탭 (추가 기능 + 이미지 파일 업로드 지원) -->
         <div id="tab-locations" class="tab-content">
             <div class="section-title">
                 <span><i class="fa-solid fa-map-location-dot"></i> 주요 좌표 목록</span>
@@ -654,7 +749,7 @@
             <div class="location-grid" id="location-container"></div>
         </div>
 
-        <!-- 5. 커뮤니티 탭 (채팅 / 메시지) -->
+        <!-- 5. 커뮤니티 탭 -->
         <div id="tab-community" class="tab-content">
             <div class="section-title"><span><i class="fa-solid fa-comments"></i> 서버 실시간 커뮤니티</span></div>
             <div class="chat-container">
@@ -684,8 +779,8 @@
                 <input type="text" id="locCoordsInput" class="form-input" placeholder="예: 1234 64 -5678">
             </div>
             <div class="input-group">
-                <label>이미지 URL (선택사항)</label>
-                <input type="text" id="locImgInput" class="form-input" placeholder="https://example.com/image.jpg">
+                <label>이미지 파일 업로드 (선택사항)</label>
+                <input type="file" id="locImgFileInput" class="form-input" accept="image/*" style="padding: 8px;">
             </div>
             <button class="btn-action btn-save" onclick="saveNewLocation()">좌표 등록하기</button>
         </div>
@@ -704,7 +799,11 @@
                     <button class="close-btn" onclick="closeModal('detailModal')"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
+
+            <!-- 스타팅 포망몬 대형 배너 -->
             <div id="detailStarterBox" style="display:none;"></div>
+
+            <!-- 보유 포망몬 리스트 -->
             <div id="detailList" class="poke-modal-list"></div>
         </div>
     </div>
@@ -863,11 +962,16 @@
             "전설 포망몬으로만 하늘 날기 가능 (일반포망몬 X)", "전설 보스 확률 명령어 확인 금지"
         ];
 
+        // 채팅으로 전달된 전체 주요 좌표 목록
         const defaultLocations = [
             { name: "기술 할배", coords: "968 ~ 8", img: "" },
             { name: "드래곤 체육관", coords: "2665 78 194", img: "" },
             { name: "세레비 신전", coords: "739 68 22 / -3415 64 -244", img: "" },
-            { name: "아르세우스 신전", coords: "-17493 83 32 11", img: "" }
+            { name: "썬더 스폰지", coords: "366 62 -198 / -1863 75 -884", img: "" },
+            { name: "집 마을", coords: "-200 65 600", img: "" },
+            { name: "중간 마을 (기술할배 근처)", coords: "-7262 63 -1001", img: "" },
+            { name: "아르세우스 신전", coords: "-17493 83 32 11", img: "" },
+            { name: "세렙 스폰지", coords: "9744 65 8968", img: "" }
         ];
 
         // 좌표 불러오기
@@ -903,26 +1007,42 @@
 
         window.openAddLocModal = () => { document.getElementById("addLocModal").style.display = "flex"; };
         
+        // 이미지 파일 업로드 처리
         window.saveNewLocation = async function() {
             const title = document.getElementById("locTitleInput").value.trim();
             const coords = document.getElementById("locCoordsInput").value.trim();
-            const img = document.getElementById("locImgInput").value.trim();
+            const fileInput = document.getElementById("locImgFileInput");
 
             if (!title || !coords) { alert("이름과 좌표를 입력해주세요."); return; }
 
-            try {
-                const docRef = doc(db, "system", "customLocations");
-                const docSnap = await getDoc(docRef);
-                let currentList = docSnap.exists() && docSnap.data().list ? docSnap.data().list : [];
-                
-                currentList.push({ name: title, coords: coords, img: img });
-                await setDoc(docRef, { list: currentList });
+            const processSave = async (imgDataUrl) => {
+                try {
+                    const docRef = doc(db, "system", "customLocations");
+                    const docSnap = await getDoc(docRef);
+                    let currentList = docSnap.exists() && docSnap.data().list ? docSnap.data().list : [];
+                    
+                    currentList.push({ name: title, coords: coords, img: imgDataUrl });
+                    await setDoc(docRef, { list: currentList });
 
-                alert("좌표가 성공적으로 추가되었습니다!");
-                closeModal("addLocModal");
-                loadLocations();
-            } catch(e) {
-                alert("저장 실패: " + e.message);
+                    alert("좌표가 성공적으로 추가되었습니다!");
+                    closeModal("addLocModal");
+                    document.getElementById("locTitleInput").value = "";
+                    document.getElementById("locCoordsInput").value = "";
+                    fileInput.value = "";
+                    loadLocations();
+                } catch(e) {
+                    alert("저장 실패: " + e.message);
+                }
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    processSave(e.target.result);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                processSave("");
             }
         };
 
