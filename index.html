@@ -32,20 +32,12 @@
         }
         .header-title { 
             display: flex; 
-            justify-content: space-between; 
+            justify-content: center; 
             align-items: center; 
             margin-bottom: 18px; 
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 0 auto;
         }
         .header-title h1 {
             color: #ffffff;
@@ -76,47 +68,6 @@
             border-radius: 50%;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* Server Status Widget */
-        .server-status-widget {
-            background: #171920;
-            border: 1px solid #282c37;
-            padding: 8px 14px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-        }
-        .status-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #da373c;
-            box-shadow: 0 0 8px #da373c;
-            transition: all 0.3s;
-        }
-        .status-indicator.online {
-            background: #23a55a;
-            box-shadow: 0 0 10px #23a55a;
-        }
-        .power-btn {
-            background: #252833;
-            border: 1px solid #3b4050;
-            color: #fff;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .power-btn:hover {
-            background: #e3350d;
-            border-color: #e3350d;
-        }
 
         /* Navigation Tabs */
         .nav-tabs {
@@ -154,6 +105,101 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
+        /* 대문짝만 한 서버 주소 & 상태 배너 스타일 */
+        .server-hero-card {
+            background: linear-gradient(135deg, rgba(255, 203, 5, 0.08) 0%, rgba(227, 53, 13, 0.1) 100%), #15171e;
+            border: 2px solid #ffcb05;
+            border-radius: 20px;
+            padding: 24px 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .server-info-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .server-status-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #da373c;
+            box-shadow: 0 0 10px #da373c;
+            transition: all 0.3s;
+        }
+        .status-indicator.online {
+            background: #23a55a;
+            box-shadow: 0 0 14px #23a55a;
+        }
+        .status-text {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #da373c;
+        }
+        .status-text.online {
+            color: #23a55a;
+        }
+        .server-ip-huge {
+            font-family: monospace;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ffcb05;
+            letter-spacing: 1px;
+            text-shadow: 0 0 12px rgba(255, 203, 5, 0.4);
+            margin: 2px 0;
+        }
+        .server-action-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .power-btn-lg {
+            background: #252833;
+            border: 2px solid #3b4050;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+        .power-btn-lg:hover {
+            background: #e3350d;
+            border-color: #e3350d;
+            transform: scale(1.08);
+        }
+        .ip-copy-btn-lg {
+            background: #ffcb05;
+            color: #0d0e12;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 203, 5, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ip-copy-btn-lg:hover { background: #ffd733; transform: scale(1.05); }
+
         /* Banner */
         .hero-banner {
             background: linear-gradient(135deg, rgba(227, 53, 13, 0.15) 0%, rgba(255, 203, 5, 0.1) 100%), #171920;
@@ -169,40 +215,6 @@
         }
         .hero-text h2 { margin: 0 0 8px 0; color: #ffffff; font-size: 1.5rem; font-weight: 800; }
         .hero-text p { margin: 0; color: #a0a5b1; font-size: 0.9rem; }
-        
-        /* 대문짝만 한 서버 주소 스타일 */
-        .server-ip-display {
-            background: #090a0e;
-            border: 2px dashed #ffcb05;
-            border-radius: 12px;
-            padding: 12px 20px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
-        .server-ip-text {
-            font-family: monospace;
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: #ffcb05;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(255, 203, 5, 0.4);
-        }
-        .ip-copy-btn {
-            background: #ffcb05;
-            color: #0d0e12;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .ip-copy-btn:hover { background: #ffd733; transform: scale(1.05); }
-
         .stat-badges { display: flex; gap: 12px; }
         .stat-card {
             background: #0f1015;
@@ -528,19 +540,7 @@
 
     <header>
         <div class="header-title">
-            <div class="header-left">
-                <h1><div class="pokeball-icon"></div> 포망몬 마크 서버</h1>
-            </div>
-            <!-- 전원버튼 및 서버 상태 위젯 -->
-            <div class="server-status-widget">
-                <div style="display:flex; align-items:center; gap:6px;">
-                    <div id="statusIndicator" class="status-indicator"></div>
-                    <span id="statusText" style="font-weight:bold; color:#a0a5b1;">확인 중...</span>
-                </div>
-                <span style="color:#4a5060;">|</span>
-                <span style="font-family:monospace; color:#ffcb05;">25.18.80.235:1234</span>
-                <button class="power-btn" onclick="toggleServerStatus()" title="서버 전원 토글"><i class="fa-solid fa-power-off"></i></button>
-            </div>
+            <h1><div class="pokeball-icon"></div> 포망몬 마크 서버</h1>
         </div>
         <div class="nav-tabs">
             <button class="tab-btn active" id="btn-home" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> 메인 (홈)</button>
@@ -555,16 +555,19 @@
         <!-- 0. 메인 홈 탭 -->
         <div id="tab-home" class="tab-content active">
             
-            <!-- 대문짝만 한 서버 주소 박스 (⚡ 포망몬 서버 정보센터 바로 위) -->
-            <div class="server-ip-display">
-                <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
-                    <i class="fa-solid fa-server" style="color: #ffcb05; font-size: 1.5rem; flex-shrink: 0;"></i>
-                    <div style="overflow: hidden;">
-                        <div style="font-size: 0.75rem; color: #8a8f9d; font-weight: 700; margin-bottom: 2px;">SERVER ADDRESS</div>
-                        <div class="server-ip-text">25.18.80.235:1234</div>
+            <!-- 대문짝만 한 서버 주소 & 상태 및 전원버튼 카드 배너 -->
+            <div class="server-hero-card">
+                <div class="server-info-left">
+                    <div class="server-status-row">
+                        <div id="statusIndicator" class="status-indicator"></div>
+                        <span id="statusText" class="status-text">확인 중...</span>
                     </div>
+                    <div class="server-ip-huge">25.18.80.235:1234</div>
                 </div>
-                <button class="ip-copy-btn" onclick="copyText('25.18.80.235:1234')"><i class="fa-regular fa-copy"></i> 주소 복사</button>
+                <div class="server-action-right">
+                    <button class="ip-copy-btn-lg" onclick="copyText('25.18.80.235:1234')"><i class="fa-regular fa-copy"></i> 주소 복사</button>
+                    <button class="power-btn-lg" onclick="toggleServerStatus()" title="서버 전원 켜기/끄기"><i class="fa-solid fa-power-off"></i></button>
+                </div>
             </div>
 
             <div class="hero-banner">
@@ -822,12 +825,12 @@
 
             if (serverState === 1) {
                 indicator.classList.add("online");
-                statusText.innerText = "온라인 (켜짐)";
-                statusText.style.color = "#23a55a";
+                statusText.classList.add("online");
+                statusText.innerText = "온라인 (서버 켜짐)";
             } else {
                 indicator.classList.remove("online");
-                statusText.innerText = "오프라인 (꺼짐)";
-                statusText.style.color = "#da373c";
+                statusText.classList.remove("online");
+                statusText.innerText = "오프라인 (서버 꺼짐)";
             }
         }
 
