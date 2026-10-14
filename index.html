@@ -51,6 +51,11 @@
             display: flex; 
             align-items: center; 
             gap: 10px;
+            cursor: pointer; /* 클릭 가능한 커서 지정 */
+            transition: opacity 0.2s;
+        }
+        .header-title:hover {
+            opacity: 0.85;
         }
         .header-title h1 {
             color: #ffffff;
@@ -662,8 +667,8 @@
 
     <header>
         <div class="header-container">
-            <!-- 좌측: 로고 + 포망몬 마크 서버 타이틀 -->
-            <div class="header-title">
+            <!-- 좌측: 로고 + 포망몬 마크 서버 타이틀 (클릭 시 새로고침 기능 추가) -->
+            <div class="header-title" onclick="location.reload()" title="클릭하여 새로고침">
                 <h1><div class="pokeball-icon"></div> 포망몬 마크 서버</h1>
             </div>
 
