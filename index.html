@@ -20,7 +20,7 @@
             min-height: 100vh;
         }
 
-        /* Header */
+        /* Header Layout - 로고는 왼쪽, 탭 메뉴는 중앙 배치 */
         header {
             background: rgba(22, 24, 31, 0.95);
             backdrop-filter: blur(10px);
@@ -30,18 +30,24 @@
             top: 0;
             z-index: 100;
         }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
         .header-title { 
             display: flex; 
-            justify-content: center; 
             align-items: center; 
-            margin-bottom: 18px; 
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            gap: 10px;
+            margin-bottom: 12px;
         }
         .header-title h1 {
             color: #ffffff;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin: 0;
             display: flex;
             align-items: center;
@@ -69,7 +75,7 @@
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Navigation Tabs */
+        /* Navigation Tabs - 중앙 정렬 */
         .nav-tabs {
             display: flex;
             justify-content: center;
@@ -77,6 +83,7 @@
             max-width: 1200px;
             margin: 0 auto;
             overflow-x: auto;
+            width: 100%;
         }
         .tab-btn {
             background: transparent;
@@ -100,7 +107,7 @@
             text-shadow: 0 0 8px rgba(255, 203, 5, 0.3);
         }
 
-        /* Container */
+        /* Main Container */
         .main-container { max-width: 1200px; margin: 25px auto; padding: 0 20px; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -159,7 +166,7 @@
             text-shadow: 0 0 12px rgba(35, 165, 90, 0.4);
         }
 
-        /* 주소와 복사 버튼을 한 줄로 나란히 배치 */
+        /* 주소와 복사 버튼 한 줄 배치 */
         .server-ip-copy-row {
             display: flex;
             align-items: center;
@@ -193,7 +200,7 @@
         }
         .ip-copy-btn-lg:hover { background: #ffd733; transform: scale(1.05); }
 
-        /* 전원 버튼 아래쪽 배치 스타일 */
+        /* 전원 버튼 아래쪽 배치 */
         .power-btn-lg {
             background: #252833;
             border: 2px solid #3b4050;
@@ -217,7 +224,7 @@
             transform: scale(1.05);
         }
 
-        /* Banner */
+        /* Banner & Stat Cards */
         .hero-banner {
             background: linear-gradient(135deg, rgba(227, 53, 13, 0.15) 0%, rgba(255, 203, 5, 0.1) 100%), #171920;
             border: 1px solid rgba(227, 53, 13, 0.3);
@@ -268,7 +275,15 @@
         .quick-card p { margin: 0; color: #8a8f9d; font-size: 0.85rem; }
 
         /* Section Title */
-        .section-title { color: #ffffff; font-size: 1.25rem; margin: 25px 0 15px 0; display: flex; align-items: center; gap: 10px; font-weight: 800; }
+        .section-title { 
+            color: #ffffff; 
+            font-size: 1.25rem; 
+            margin: 25px 0 15px 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            font-weight: 800; 
+        }
 
         /* Profiles Grid */
         .profile-grid {
@@ -313,11 +328,7 @@
         .user-name { font-size: 1.15rem; font-weight: 800; color: white; }
         .mc-name { font-size: 0.8rem; color: #23a55a; font-weight: bold; margin-top: 2px; }
         
-        .header-right-badges {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .header-right-badges { display: flex; align-items: center; gap: 8px; }
         .poke-badge {
             font-size: 0.8rem;
             color: #ffffff;
@@ -373,15 +384,107 @@
             color: #ffffff;
             flex-wrap: wrap;
         }
-        .poke-level-tag {
-            color: #ffcb05;
-            font-size: 1.05rem;
-            font-weight: 800;
+        .poke-level-tag { color: #ffcb05; font-size: 1.05rem; font-weight: 800; }
+
+        /* 주요 좌표 카드 (이미지 지원) */
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+        }
+        .location-card {
+            background: #171920;
+            border: 1px solid #282c37;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+        .location-card:hover {
+            border-color: #23a55a;
+            transform: translateY(-3px);
+        }
+        .loc-img-box {
+            width: 100%;
+            height: 140px;
+            background: #0c0d11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 1px solid #282c37;
+        }
+        .loc-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .loc-body { padding: 16px; }
+        .loc-title { font-size: 1.1rem; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
+        .loc-coords { color: #23a55a; font-family: monospace; font-weight: bold; font-size: 0.95rem; margin-bottom: 12px; }
+        
+        .loc-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #222631;
+            padding: 10px 16px;
+            background: #111319;
         }
 
-        /* Commands, Rules, Locations Cards */
-        .cmd-grid, .rules-list, .location-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
-        .cmd-card, .rule-card, .location-card { background: #171920; border: 1px solid #282c37; border-radius: 12px; padding: 16px; }
+        /* 커뮤니티 / 채팅 스타일 */
+        .chat-container {
+            background: #171920;
+            border: 1px solid #282c37;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .chat-box {
+            background: #0d0e12;
+            border: 1px solid #222631;
+            border-radius: 12px;
+            height: 380px;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chat-msg {
+            background: #171920;
+            border: 1px solid #282c37;
+            padding: 10px 14px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        .chat-user { font-weight: 800; font-size: 0.85rem; color: #ffcb05; margin-bottom: 4px; }
+        .chat-text { font-size: 0.95rem; color: #ffffff; word-break: break-all; }
+        .chat-time { font-size: 0.7rem; color: #606573; margin-top: 4px; text-align: right; }
+
+        .chat-input-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .chat-input-row input {
+            background: #0d0e12;
+            border: 1px solid #2d3240;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .chat-input-row input:focus { border-color: #ffcb05; }
+
+        /* Commands, Rules Cards */
+        .cmd-grid, .rules-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+        .cmd-card, .rule-card { background: #171920; border: 1px solid #282c37; border-radius: 12px; padding: 16px; }
         .cmd-code {
             background: #0f1015; color: #ffcb05; padding: 10px 12px; border-radius: 8px;
             font-family: monospace; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center;
@@ -389,7 +492,6 @@
         }
         .rule-card { border-left: 4px solid #e3350d; }
         .rule-card i { color: #e3350d; font-size: 1.2rem; }
-        .loc-coords { color: #23a55a; font-family: monospace; font-weight: bold; }
         .copy-btn { background: none; border: none; color: #808592; cursor: pointer; transition: color 0.2s; }
         .copy-btn:hover { color: #fff; }
 
@@ -432,77 +534,6 @@
         .btn-mini-edit:hover { background: #e3350d; color: #fff; border-color: #e3350d; }
         .close-btn { background: none; border: none; color: #808592; font-size: 1.3rem; cursor: pointer; }
 
-        .starter-hero-banner {
-            background: linear-gradient(135deg, rgba(255, 203, 5, 0.15) 0%, rgba(227, 53, 13, 0.15) 100%), #0c0d11;
-            border: 2px solid #ffcb05;
-            border-radius: 16px;
-            padding: 14px 22px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 0 20px rgba(255, 203, 5, 0.25);
-        }
-        .starter-hero-text {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .starter-hero-text .title-tag {
-            color: #ffcb05;
-            font-size: 0.8rem;
-            font-weight: 900;
-        }
-        .starter-hero-text .poke-name-lg {
-            color: #ffffff;
-            font-size: 1.45rem;
-            font-weight: 900;
-        }
-        .starter-hero-img-lg {
-            width: 75px;
-            height: 75px;
-            object-fit: contain;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.8));
-        }
-
-        .poke-modal-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 320px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-        .poke-modal-row {
-            background: #08090c;
-            border: 1px solid #222631;
-            border-radius: 14px;
-            padding: 12px 18px;
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            transition: all 0.2s;
-        }
-        .poke-modal-row:hover {
-            border-color: #ffcb05;
-            transform: translateX(4px);
-        }
-        .poke-modal-img {
-            width: 65px;
-            height: 65px;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7));
-            flex-shrink: 0;
-        }
-        .poke-modal-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: #ffffff;
-        }
-
         .input-group { margin-bottom: 14px; }
         .input-group label { display: block; color: #a0a5b1; font-size: 0.82rem; font-weight: bold; margin-bottom: 6px; }
         .form-input {
@@ -511,60 +542,35 @@
         }
         .form-input:focus { border-color: #ffcb05; }
 
-        .edit-poke-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
-        .edit-poke-row input {
-            background: #0c0d11; border: 1px solid #2d3240; color: white; padding: 10px;
-            border-radius: 8px; font-size: 0.9rem; outline: none;
-        }
-        .edit-poke-row input:focus { border-color: #ffcb05; }
-
-        .color-picker {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 10px;
-            margin-top: 8px;
-        }
-        .color-option {
-            height: 36px;
-            border-radius: 10px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: #ffffff;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-        .color-option:hover { transform: scale(1.06); }
-        .color-option.selected {
-            border-color: #ffffff;
-            box-shadow: 0 0 12px rgba(255,255,255,0.9);
-            transform: scale(1.06);
-        }
-
         .btn-action {
             width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 0.95rem;
         }
         .btn-save { background: #23a55a; color: white; }
-        .btn-del { background: #da373c; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+        .btn-add-loc {
+            background: #23a55a; color: white; border: none; padding: 8px 16px; border-radius: 8px;
+            font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-add-loc:hover { background: #2cd071; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-title">
-            <h1><div class="pokeball-icon"></div> 포망몬 마크 서버</h1>
-        </div>
-        <div class="nav-tabs">
-            <button class="tab-btn active" id="btn-home" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> 메인 (홈)</button>
-            <button class="tab-btn" id="btn-profiles" onclick="switchTab('profiles')"><i class="fa-solid fa-id-card"></i> 프로필</button>
-            <button class="tab-btn" id="btn-commands" onclick="switchTab('commands')"><i class="fa-solid fa-terminal"></i> 명령어</button>
-            <button class="tab-btn" id="btn-rules" onclick="switchTab('rules')"><i class="fa-solid fa-scroll"></i> 서버 규칙</button>
-            <button class="tab-btn" id="btn-locations" onclick="switchTab('locations')"><i class="fa-solid fa-map-location-dot"></i> 주요 좌표</button>
+        <div class="header-container">
+            <!-- 몬스터볼 로고 + 포망몬 마크 서버 타이틀 (왼쪽) -->
+            <div class="header-title">
+                <h1><div class="pokeball-icon"></div> 포망몬 마크 서버</h1>
+            </div>
+
+            <!-- 홈/프로필/명령어 등 메뉴 탭 (중앙 정렬) -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" id="btn-home" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> 메인 (홈)</button>
+                <button class="tab-btn" id="btn-profiles" onclick="switchTab('profiles')"><i class="fa-solid fa-id-card"></i> 프로필</button>
+                <button class="tab-btn" id="btn-commands" onclick="switchTab('commands')"><i class="fa-solid fa-terminal"></i> 명령어</button>
+                <button class="tab-btn" id="btn-rules" onclick="switchTab('rules')"><i class="fa-solid fa-scroll"></i> 서버 규칙</button>
+                <button class="tab-btn" id="btn-locations" onclick="switchTab('locations')"><i class="fa-solid fa-map-location-dot"></i> 주요 좌표</button>
+                <button class="tab-btn" id="btn-community" onclick="switchTab('community')"><i class="fa-solid fa-comments"></i> 커뮤니티</button>
+            </div>
         </div>
     </header>
 
@@ -615,32 +621,73 @@
                 </div>
             </div>
 
-            <div class="section-title"><i class="fa-solid fa-users"></i> 멤버 프로필 (클릭하여 확인)</div>
+            <div class="section-title">
+                <span><i class="fa-solid fa-users"></i> 멤버 프로필 (클릭하여 확인)</span>
+            </div>
             <div class="profile-grid" id="home-profile-container"></div>
         </div>
 
         <!-- 1. 전체 프로필 탭 -->
         <div id="tab-profiles" class="tab-content">
-            <div class="section-title"><i class="fa-solid fa-users"></i> 전체 멤버 프로필</div>
+            <div class="section-title"><span><i class="fa-solid fa-users"></i> 전체 멤버 프로필</span></div>
             <div class="profile-grid" id="profile-container"></div>
         </div>
 
         <!-- 2. 명령어 탭 -->
         <div id="tab-commands" class="tab-content">
-            <div class="section-title"><i class="fa-solid fa-terminal"></i> 서버 명령어 모음</div>
+            <div class="section-title"><span><i class="fa-solid fa-terminal"></i> 서버 명령어 모음</span></div>
             <div class="cmd-grid" id="cmd-container"></div>
         </div>
 
         <!-- 3. 규칙 탭 -->
         <div id="tab-rules" class="tab-content">
-            <div class="section-title"><i class="fa-solid fa-scroll"></i> 서버 규칙 및 조건</div>
+            <div class="section-title"><span><i class="fa-solid fa-scroll"></i> 서버 규칙 및 조건</span></div>
             <div class="rules-list" id="rules-container"></div>
         </div>
 
-        <!-- 4. 좌표 탭 -->
+        <!-- 4. 좌표 탭 (추가 기능 + 이미지 지원) -->
         <div id="tab-locations" class="tab-content">
-            <div class="section-title"><i class="fa-solid fa-map-location-dot"></i> 주요 좌표 목록</div>
+            <div class="section-title">
+                <span><i class="fa-solid fa-map-location-dot"></i> 주요 좌표 목록</span>
+                <button class="btn-add-loc" onclick="openAddLocModal()"><i class="fa-solid fa-plus"></i> 좌표 추가</button>
+            </div>
             <div class="location-grid" id="location-container"></div>
+        </div>
+
+        <!-- 5. 커뮤니티 탭 (채팅 / 메시지) -->
+        <div id="tab-community" class="tab-content">
+            <div class="section-title"><span><i class="fa-solid fa-comments"></i> 서버 실시간 커뮤니티</span></div>
+            <div class="chat-container">
+                <div id="chatBox" class="chat-box"></div>
+                <div class="chat-input-row">
+                    <input type="text" id="chatNick" placeholder="닉네임" style="flex:1; max-width:140px;">
+                    <input type="text" id="chatMsg" placeholder="메시지를 입력하세요..." style="flex:4;" onkeypress="if(event.key==='Enter') sendChatMessage()">
+                    <button class="btn-add-loc" onclick="sendChatMessage()" style="padding:12px 20px;">전송</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 좌표 추가 모달 -->
+    <div class="modal" id="addLocModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>새 주요 좌표 추가</h3>
+                <button class="close-btn" onclick="closeModal('addLocModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="input-group">
+                <label>장소 이름</label>
+                <input type="text" id="locTitleInput" class="form-input" placeholder="예: 전설의 신전">
+            </div>
+            <div class="input-group">
+                <label>좌표 값</label>
+                <input type="text" id="locCoordsInput" class="form-input" placeholder="예: 1234 64 -5678">
+            </div>
+            <div class="input-group">
+                <label>이미지 URL (선택사항)</label>
+                <input type="text" id="locImgInput" class="form-input" placeholder="https://example.com/image.jpg">
+            </div>
+            <button class="btn-action btn-save" onclick="saveNewLocation()">좌표 등록하기</button>
         </div>
     </div>
 
@@ -657,11 +704,7 @@
                     <button class="close-btn" onclick="closeModal('detailModal')"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
-
-            <!-- 스타팅 포망몬 대형 배너 -->
             <div id="detailStarterBox" style="display:none;"></div>
-
-            <!-- 보유 포망몬 리스트 -->
             <div id="detailList" class="poke-modal-list"></div>
         </div>
     </div>
@@ -727,7 +770,7 @@
     <!-- Firebase SDK & Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAfv1K8wdmFx1wopmHje_M59yv9v5hd5GU",
@@ -747,90 +790,30 @@
         let currentPokemonList = [];
         let currentMemberData = {};
         let selectedTheme = "red";
-        let serverState = 0; // 0: 꺼짐, 1: 켜짐
+        let serverState = 0;
 
+        // 확장된 포켓몬 목록
         const pokeNumMap = {
             "이상해씨":1, "이상해풀":2, "이상해꽃":3,
             "파이리":4, "리자드":5, "리자몽":6,
             "꼬부기":7, "어니부기":8, "거북왕":9,
             "캐터피":10, "단데기":11, "버터플":12,
-            "뿔충이":13, "딱충이":14, "독침붕":15,
-            "구구":16, "피죤":17, "피죤투":18,
-            "꼬렛":19, "레트라":20,
             "피카츄":25, "라이츄":26,
-            "모래두지":27, "고지":28,
-            "니드런♀":29, "니드리나":30, "니드퀸":31,
-            "니드런♂":32, "니드리노":33, "니드킹":34,
-            "삐삐":35, "픽시":36,
-            "식스테일":37, "나인테일":38,
-            "푸린":39, "푸크린":40,
-            "주뱃":41, "골뱃":42,
-            "뚜벅초":43, "냄새꼬":44, "라플레시아":45,
-            "파라스":46, "파라섹트":47,
-            "콘팡":48, "모르폴":49,
-            "디그다":50, "닥트리오":51,
-            "나옹":52, "페르시온":53,
-            "고라파덕":54, "골덕":55,
-            "망키":56, "성원숭":57,
-            "가디":58, "윈디":59,
-            "발챙이":60, "슈륙챙이":61, "강챙이":62,
-            "캐이시":63, "윤겔라":64, "후딘":65,
-            "알통몬":66, "근육몬":67, "괴력몬":68,
-            "모다피":69, "우츠동":70, "우츠보트":71,
-            "왕눈해":72, "독파리":73,
-            "꼬마돌":74, "데구리":75, "딱구리":76,
-            "포니타":77, "날쌩마":78,
-            "야돈":79, "야도란":80,
-            "코일":81, "레어코일":82,
-            "파오리":83,
-            "두두":84, "두리오":85,
-            "쥬쥬":86, "쥬레곤":87,
-            "질퍽이":88, "질뻐기":89,
-            "셀러":90, "파르셀":91,
-            "고오스":92, "고우스트":93, "팬텀":94,
-            "롱스톤":95,
-            "슬리프":96, "슬리퍼":97,
-            "크랩":98, "킹크랩":99,
-            "찌리리공":100, "붐볼":101,
-            "아라리":102, "나시":103,
-            "탕구리":104, "텅구리":105,
-            "시라소몬":106, "홍수몬":107,
-            "내루미":108,
-            "또가스":109, "또도가스":110,
-            "뿔카노":111, "코뿌리":112,
-            "럭키":113,
-            "덩쿠리":114,
-            "캥카":115,
-            "쏘드라":116, "시드라":117,
-            "콘치":118, "왕콘치":119,
-            "별가사리":120, "아쿠스타":121,
-            "마임맨":122,
-            "스라크":123,
-            "루주라":124,
-            "에레브":125,
-            "마그마":126,
-            "쁘사이저":127,
-            "켄타로스":128,
+            "푸린":39, "고라파덕":54, "팬텀":94,
             "잉어킹":129, "갸라도스":130,
-            "라프라스":131,
             "메타몽":132,
             "이브이":133, "샤미드":134, "쥬피썬더":135, "부스터":136, "에브이":196, "블래키":197, "리피아":470, "글레이시아":471, "님피아":700,
-            "폴리곤":137,
-            "암나이트":138, "암스타":139,
-            "투구푸스":141, "프테라":142,
             "잠만보":143,
             "프리져":144, "썬더":145, "파이어":146,
-            "미니룡":147, "신뇽":148, "망나뇽":149,
-            "뮤츠":150, "뮤":151,
+            "망나뇽":149, "뮤츠":150, "뮤":151,
             "치코리타":152, "베이리프":153, "메가니움":154,
             "브케인":155, "마그케인":156, "블레이범":157,
             "리아코":158, "엘리게이":159, "장크로다일":160,
-            "토기피":175, "토틱":176, "마릴":183, "마릴리":184,
             "마기라스":248, "루기아":249, "칠색조":250, "세레비":251,
             "나무지기":252, "나무돌이":253, "나무킹":254,
             "아차모":255, "영치코":256, "번치코":257,
             "물짱이":258, "늪짱이":259, "대짱이":260,
-            "가이오가":382, "그란돈":383, "레쿠쟈":384, "지라치":385, "테오시스":386,
+            "가이오가":382, "그란돈":383, "레쿠쟈":384, "지라치":385,
             "모부기":387, "토대부기":389,
             "불꽃숭이":390, "초염몽":392,
             "팽도리":393, "엠페르트":395,
@@ -846,10 +829,7 @@
             if (!name) return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png`;
             const cleanName = name.trim();
             const num = pokeNumMap[cleanName];
-            if (num) {
-                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${num}.png`;
-            }
-            return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png`;
+            return num ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${num}.png` : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png`;
         }
 
         const themeStyles = {
@@ -883,42 +863,125 @@
             "전설 포망몬으로만 하늘 날기 가능 (일반포망몬 X)", "전설 보스 확률 명령어 확인 금지"
         ];
 
-        const locationsData = [
-            { name: "기술 할배", coords: "968 ~ 8" }, { name: "드래곤 체육관", coords: "2665 78 194" },
-            { name: "세레비 신전", coords: "739 68 22 / -3415 64 -244" }, { name: "썬더 스폰지", coords: "366 62 -198 / -1863 75 -884" },
-            { name: "집 마을", coords: "-200 65 600" }, { name: "중간 마을 (기술할배 근처)", coords: "-7262 63 -1001" },
-            { name: "아르세우스 신전", coords: "-17493 83 32 11" }, { name: "세렙 스폰지", coords: "9744 65 8968" }
+        const defaultLocations = [
+            { name: "기술 할배", coords: "968 ~ 8", img: "" },
+            { name: "드래곤 체육관", coords: "2665 78 194", img: "" },
+            { name: "세레비 신전", coords: "739 68 22 / -3415 64 -244", img: "" },
+            { name: "아르세우스 신전", coords: "-17493 83 32 11", img: "" }
         ];
 
-        // Firebase에서 서버 상태 불러오기 및 화면 업데이트
+        // 좌표 불러오기
+        window.loadLocations = async function() {
+            const container = document.getElementById("location-container");
+            container.innerHTML = "";
+            let locations = [...defaultLocations];
+
+            try {
+                const docRef = doc(db, "system", "customLocations");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists() && docSnap.data().list) {
+                    locations = [...locations, ...docSnap.data().list];
+                }
+            } catch (e) {}
+
+            locations.forEach(loc => {
+                const card = document.createElement("div");
+                card.className = "location-card";
+                card.innerHTML = `
+                    ${loc.img ? `<div class="loc-img-box"><img src="${loc.img}" alt="${loc.name}" onerror="this.parentElement.style.display='none'"></div>` : ''}
+                    <div class="loc-body">
+                        <div class="loc-title">${loc.name}</div>
+                        <div class="loc-coords">${loc.coords}</div>
+                    </div>
+                    <div class="loc-footer">
+                        <button class="copy-btn" onclick="copyText('${loc.coords}')"><i class="fa-regular fa-copy"></i> 좌표 복사</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        };
+
+        window.openAddLocModal = () => { document.getElementById("addLocModal").style.display = "flex"; };
+        
+        window.saveNewLocation = async function() {
+            const title = document.getElementById("locTitleInput").value.trim();
+            const coords = document.getElementById("locCoordsInput").value.trim();
+            const img = document.getElementById("locImgInput").value.trim();
+
+            if (!title || !coords) { alert("이름과 좌표를 입력해주세요."); return; }
+
+            try {
+                const docRef = doc(db, "system", "customLocations");
+                const docSnap = await getDoc(docRef);
+                let currentList = docSnap.exists() && docSnap.data().list ? docSnap.data().list : [];
+                
+                currentList.push({ name: title, coords: coords, img: img });
+                await setDoc(docRef, { list: currentList });
+
+                alert("좌표가 성공적으로 추가되었습니다!");
+                closeModal("addLocModal");
+                loadLocations();
+            } catch(e) {
+                alert("저장 실패: " + e.message);
+            }
+        };
+
+        // 커뮤니티 채팅 기능
+        window.sendChatMessage = async function() {
+            const nick = document.getElementById("chatNick").value.trim() || "익명";
+            const msg = document.getElementById("chatMsg").value.trim();
+            if (!msg) return;
+
+            try {
+                await addDoc(collection(db, "chats"), {
+                    nick: nick,
+                    msg: msg,
+                    timestamp: new Date()
+                });
+                document.getElementById("chatMsg").value = "";
+            } catch (e) {
+                alert("전송 실패");
+            }
+        };
+
+        function listenCommunity() {
+            const q = query(collection(db, "chats"), orderBy("timestamp", "asc"));
+            onSnapshot(q, (snapshot) => {
+                const chatBox = document.getElementById("chatBox");
+                chatBox.innerHTML = "";
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const timeStr = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
+                    chatBox.innerHTML += `
+                        <div class="chat-msg">
+                            <div class="chat-user">${data.nick}</div>
+                            <div class="chat-text">${data.msg}</div>
+                            <div class="chat-time">${timeStr}</div>
+                        </div>
+                    `;
+                });
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+        }
+
+        // 서버 상태 연동
         window.loadServerStatus = async function() {
             try {
                 const docRef = doc(db, "system", "serverStatus");
                 const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    serverState = docSnap.data().state || 0;
-                } else {
-                    serverState = 0;
-                }
-            } catch (e) {
-                serverState = 0;
-            }
+                serverState = docSnap.exists() ? docSnap.data().state || 0 : 0;
+            } catch (e) { serverState = 0; }
             updateStatusUI();
         };
 
-        // 전원 버튼 클릭 시 0 <-> 1 토글 후 Firebase에 저장
         window.toggleServerStatus = async function() {
             serverState = serverState === 1 ? 0 : 1;
             try {
-                const docRef = doc(db, "system", "serverStatus");
-                await setDoc(docRef, { state: serverState });
-            } catch (e) {
-                alert("서버 상태 저장 실패");
-            }
+                await setDoc(doc(db, "system", "serverStatus"), { state: serverState });
+            } catch (e) {}
             updateStatusUI();
         };
 
-        // 화면 UI 반영 함수 (온라인/오프라인 테두리 및 중앙 정렬 적용)
         function updateStatusUI() {
             const card = document.getElementById("serverHeroCard");
             const indicator = document.getElementById("statusIndicator");
@@ -940,13 +1003,9 @@
         window.switchTab = function(tabName) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-            const targetBtn = document.getElementById(`btn-${tabName}`);
-            if(targetBtn) targetBtn.classList.add('active');
-            
-            const targetTab = document.getElementById(`tab-${tabName}`);
-            if(targetTab) targetTab.classList.add('active');
-        }
+            document.getElementById(`btn-${tabName}`).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        };
 
         window.loadProfiles = async function() {
             const homeContainer = document.getElementById("home-profile-container");
@@ -983,7 +1042,6 @@
                     card.onclick = () => openDetailModal(name, pokemonData, mcName, starter);
                     
                     const t = themeStyles[theme] || themeStyles['red'];
-
                     card.style.setProperty('--theme-shadow', t.shadow);
                     card.style.setProperty('--theme-gradient', t.gradient);
 
@@ -1196,18 +1254,6 @@
             `).join('');
         }
 
-        function renderLocations() {
-            document.getElementById("location-container").innerHTML = locationsData.map(l => `
-                <div class="location-card">
-                    <div>
-                        <h4 style="margin:0 0 4px 0; color:#fff;">${l.name}</h4>
-                        <div class="loc-coords">${l.coords}</div>
-                    </div>
-                    <button class="copy-btn" onclick="copyText('${l.coords}')"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-            `).join('');
-        }
-
         window.copyText = (text) => {
             navigator.clipboard.writeText(text);
             alert(`복사되었습니다: ${text}`);
@@ -1217,8 +1263,9 @@
         loadProfiles();
         renderCommands();
         renderRules();
-        renderLocations();
-        loadServerStatus(); // 페이지 로드 시 Firebase에서 서버 상태 가져오기
+        loadLocations();
+        loadServerStatus();
+        listenCommunity();
     </script>
 </body>
 </html>
