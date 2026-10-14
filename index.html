@@ -20,26 +20,24 @@
             min-height: 100vh;
         }
 
-        /* Header Layout - 로고는 왼쪽, 탭 메뉴는 오른쪽/중앙 배치 */
         header {
             background: rgba(22, 24, 31, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 2px solid #e3350d;
-            padding: 14px 24px;
+            padding: 14px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
         }
         .header-container {
-            max-width: 1300px;
-            margin: 0 auto;
+            max-width: 100%; /* 기존 1300px 제한 해제 */
+            width: 100%;
+            margin: 0;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* 왼쪽으로 바싹 당김 */
-            gap: 35px; /* 로고와 탭 사이의 여백 */
-            flex-wrap: wrap;
-            
-            gap: 15px;
+            justify-content: flex-start; /* 왼쪽 정렬 */
+            gap: 380px; /* 로고와 탭 메뉴 사이의 간격 */
+            padding: 0 10px;
         }
         .header-title { 
             display: flex; 
@@ -1113,12 +1111,12 @@
                 card.className = "server-hero-card online";
                 indicator.classList.add("online");
                 statusText.classList.add("online");
-                statusText.innerText = "🟢 온라인 (서버 켜짐)";
+                statusText.innerText = " 온라인 (서버 켜짐)";
             } else {
                 card.className = "server-hero-card offline";
                 indicator.classList.remove("online");
                 statusText.classList.remove("online");
-                statusText.innerText = "🔴 오프라인 (서버 꺼짐)";
+                statusText.innerText = " 오프라인 (서버 꺼짐)";
             }
         }
 
