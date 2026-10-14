@@ -227,7 +227,7 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
         }
 
-        /* 🔥 요청하신 하단 메인 포켓몬 박스 레이아웃 (캐릭터 + 이름 [레벨]) 🔥 */
+        /* 🔥 하단 메인 포켓몬 박스 레이아웃 (캐릭터 + 이름 [레벨]) 🔥 */
         .card-main-poke-box {
             background: #08090c;
             border-radius: 14px;
@@ -313,7 +313,7 @@
         .btn-mini-edit:hover { background: #e3350d; color: #fff; border-color: #e3350d; }
         .close-btn { background: none; border: none; color: #808592; font-size: 1.3rem; cursor: pointer; }
 
-        /* 🔥 모달 상단 스타팅 포켓몬 가로형 배너 🔥 */
+        /* 스타팅 포켓몬 가로형 배너 */
         .starter-hero-banner {
             background: linear-gradient(135deg, rgba(255, 203, 5, 0.15) 0%, rgba(227, 53, 13, 0.15) 100%), #0c0d11;
             border: 2px solid #ffcb05;
@@ -347,7 +347,7 @@
             filter: drop-shadow(0 6px 12px rgba(0,0,0,0.8));
         }
 
-        /* 🔥 모달 내부 포켓몬 목록 (캐릭터 + 이름 [레벨] 대형 리스트) 🔥 */
+        /* 모달 내부 포켓몬 목록 (캐릭터 + 이름 [레벨]) */
         .poke-modal-list {
             display: flex;
             flex-direction: column;
@@ -591,18 +591,19 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK & Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyB...", 
-            authDomain: "poketest-123.firebaseapp.com",
-            projectId: "minecraft-poke-date",
-            storageBucket: "poketest-123.appspot.com",
-            messagingSenderId: "987654321",
-            appId: "1:987654321:web:abcdef"
+            apiKey: "AIzaSyAfv1K8wdmFx1wopmHje_M59yv9v5hd5GU",
+            authDomain: "minecraft-server-227b6.firebaseapp.com",
+            projectId: "minecraft-server-227b6",
+            storageBucket: "minecraft-server-227b6.firebasestorage.app",
+            messagingSenderId: "1010588171690",
+            appId: "1:1010588171690:web:96d3358fe6d30cde2e3fd3",
+            measurementId: "G-T4K2KF5RRT"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -735,7 +736,6 @@
                                     ${mcName ? `<div class="mc-name">@${mcName}</div>` : ''}
                                 </div>
                             </div>
-                            <!-- 🔥 상단 우측 스타팅 배지 + n마리 뱃지 🔥 -->
                             <div class="header-right-badges">
                                 ${starter ? `
                                     <div class="starter-badge-top">
@@ -746,7 +746,6 @@
                             </div>
                         </div>
                         
-                        <!-- 🔥 요청하신 캐릭터(이미지) + 이름 [레벨] 레이아웃 🔥 -->
                         <div class="card-main-poke-box">
                             ${mainPoke ? `
                                 <img class="poke-char-img" src="${getPokeImgUrl(mainPoke.name)}" alt="${mainPoke.name}" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
@@ -776,7 +775,6 @@
             document.getElementById("detailTitle").innerText = `${name}님의 프로필`;
             document.getElementById("detailMcName").innerText = mcName ? `@${mcName}` : '';
 
-            // 스타팅 포켓몬 대형 배너
             const starterBox = document.getElementById("detailStarterBox");
             if (starter) {
                 starterBox.style.display = "block";
@@ -793,7 +791,6 @@
                 starterBox.style.display = "none";
             }
 
-            // 🔥 모달 내부 포켓몬 목록 (캐릭터 + 이름 [레벨]) 🔥
             const listDiv = document.getElementById("detailList");
             if (pokemonList.length === 0) {
                 listDiv.innerHTML = `<div style="color:#8a8f9d; text-align:center; padding:40px 0;">등록된 포켓몬이 없습니다.</div>`;
